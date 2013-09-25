@@ -1,4 +1,4 @@
-- [Android Catchoom SDK](#android-catchoom-sdk)
+- [Catchoom example for Android](#catchoom-example-for-android)
 	- [Description](#description)
 	- [Requirements](#requirements)
 	- [Quick Start](#quick-start)
@@ -6,8 +6,8 @@
 	- [Adding the SDK to your app](#adding-the-sdk-to-your-app)
 	- [Reporting Issues](#reporting-issues)
 
-Android Catchoom SDK
-================
+Catchoom example for Android
+============================
 
 Description
 -----------
