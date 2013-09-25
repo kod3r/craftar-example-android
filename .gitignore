@@ -6,4 +6,5 @@
 *.ear
 
 bin
+libs/catchoom-sdk-android.jar
 local.properties

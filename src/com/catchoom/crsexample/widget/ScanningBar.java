@@ -1,7 +1,9 @@
-// (c) Catchoom Technologies S.L.
+//
+// © Catchoom Technologies S.L.
 // Licensed under the MIT license.
-// https://raw.github.com/catchoom/android-crc/master/LICENSE
-// All warranties and liabilities are disclaimed.
+// http://github.com/Catchoom/catchoom-example-android/blob/master/LICENSE
+//  All warranties and liabilities are disclaimed.
+//
 package com.catchoom.crsexample.widget;
 
 import android.content.Context;
