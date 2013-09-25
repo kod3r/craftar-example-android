@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+	android:layout_marginLeft="20dp"
+	android:layout_marginRight="20dp" 
+    android:background="@drawable/results_row_drawable">
+   <ImageView
+       android:id="@+id/viewport"
+       android:layout_width="@dimen/viewport_size"
+       android:layout_height="@dimen/viewport_size"
+       android:layout_centerVertical="true"
+       android:contentDescription="@string/viewport_contentDescription"
+       android:scaleType="centerCrop"
+       android:src="@drawable/viewport" />
+
+   <ImageView
+       android:id="@+id/imageView1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignParentRight="true"
+       android:layout_centerVertical="true"
+       android:contentDescription="@string/arrow_contentDescription"
+       android:src="@drawable/arrow" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/distance_from_viewport"
+        android:layout_toLeftOf="@+id/imageView1"
+        android:layout_toRightOf="@id/viewport"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/itemName"
+            style="@style/HeadingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

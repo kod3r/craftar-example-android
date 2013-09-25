@@ -1,0 +1,17 @@
+<resources>
+
+    <!-- General -->
+    <string name="app_name">Catchoom Recognition Client</string>
+
+	<string name="viewport_contentDescription">ImageView to show the thumbnails of the result</string>
+	<string name="arrow_contentDescription">ImageView to show a little arrow</string>
+	
+	<!--  Buttons -->
+	<string name="button_start_scanning">Start scanning</string>
+	<string name="button_stop_scanning">Stop</string>
+	<string name="button_done">Done</string>
+	<string name="button_take_picture">Take picture</string>
+	
+	<!-- Other -->
+	<string name="no_match_found">No match found</string>
+</resources>

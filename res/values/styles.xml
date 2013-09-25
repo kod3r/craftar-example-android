@@ -1,0 +1,19 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="AppTheme" parent="android:Theme.NoTitleBar" />
+    
+    <!-- Text -->
+    
+    <style name="HeadingText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textColor">@color/heading_text_color</item>
+        <item name="android:shadowColor">@color/light_text_shadow</item>
+        <item name="android:shadowDx">1</item>
+    	<item name="android:shadowDy">2</item>
+    </style>
+    
+  
+</resources>
