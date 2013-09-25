@@ -13,7 +13,7 @@ Description
 -----------
 The project contains the source code of a simple example application that demonstrates the functionality of the Catchoom SDK for Android.
 
-Catchoom SDK allows you to integrate into your mobile application the advanced Image Recognition (IR) capabilities of the Catchoom Recognition Service (CRS).
+Catchoom SDK allows you to integrate into your mobile application the advanced Image Recognition (IR) capabilities of the [Catchoom Recognition Service (CRS)](https://crs.catchoom.com/).
 
 The integration is as simple as importing the compiled SDK into your project and adding a few lines of code. The SDK takes care of capturing the best images, sending them to the CRS, and receiving the recognition results with the related content.
 
@@ -25,7 +25,7 @@ You can implement one of the two different modes of Image Recognition:
 
 More specifically, the SDK implements the following features:
 
-* Accessing the CRS image recognition service via CRS recognition API. This includes sending recognition requests to your collections and getting the results and the associated contents/custom data. Moreover, you can even have the SDK communicating with your own backend service and working as a proxy to the CRS.
+* Accessing the CRS image recognition service via [CRS recognition API](http://catchoom.com/documentation/api/recognition/). This includes sending recognition requests to your collections and getting the results and the associated contents/custom data. Moreover, you can even have the SDK communicating with your own backend service and working as a proxy to the CRS.
 
 * Flexible image and video capturing abstraction layer allowing you to specify the video preview. The SDK manages the video capture and presentation of the augmented reality scene. Moreover, you can easily customize the preview and the rendering of the content associated to the recognised objects.
 
