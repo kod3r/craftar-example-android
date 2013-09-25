@@ -163,24 +163,27 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
-		//Stop finding onPause, cancel the scanning bar, etc.
-		cancel();
+		if(mButtonState==STATE_SCANNING){
+			//Stop finding onPause, cancel the scanning bar, etc. Restart the camera
+			cancel();
+		}
+		
 	}
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
 			case R.id.cameraButton:
 				switch(mButtonState){
-				case STATE_START:
-					scan();
-					break;
-				case STATE_SCANNING:
-					cancel();
-					break;
-				case STATE_DONE:
-					restart();
-					break;
-				}
+					case STATE_START:
+						scan();
+						break;
+					case STATE_SCANNING:
+						cancel();
+						break;
+					case STATE_DONE:
+						restart();
+						break;
+					}
 				break;
 			case R.id.result:
 				if(mResult!=null){

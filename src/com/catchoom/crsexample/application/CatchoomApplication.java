@@ -14,7 +14,6 @@ public class CatchoomApplication extends Application {
 
 	
 	public static final String APP_LOG_TAG = "Catchoom app";
-	public static final String EXTRA_COLLECTION_TOKEN="collectionToken";
 	public static final int CAMERA_TYPE_FINDER=1;
 	public static final int CAMERA_TYPE_SINGLE_SHOT=2;
 	public static ImageManager imageManager = null;
@@ -23,7 +22,6 @@ public class CatchoomApplication extends Application {
 	public static int CAMERA_USED=CAMERA_TYPE_FINDER;
 	//FIXME: Put here your collection token. (Need Help? Go to http://catchoom.com/documentation/where-do-i-get-my-token )
 	public static final String token="catchoomcooldemo";
-	
 	
 	@Override
 	public void onCreate() {
