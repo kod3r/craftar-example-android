@@ -20,7 +20,7 @@ public class CatchoomApplication extends Application {
 	public static ImageManager imageManager = null;
 
 	//Which Camera will the app use
-	public static int CAMERA_USED=CAMERA_TYPE_SINGLE_SHOT;
+	public static int CAMERA_USED=CAMERA_TYPE_FINDER;
 	//FIXME: Put here your collection token. (Need Help? Go to http://catchoom.com/documentation/where-do-i-get-my-token )
 	public static final String token="catchoomcooldemo";
 	

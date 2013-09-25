@@ -60,6 +60,7 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Make the activity fullscreen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.single_shot_camera);
@@ -76,46 +77,36 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 	     * 		NOTE: Your FrameLayout must have layout_width and layout_height set to match_parent
 		 */		
 		setCameraParams(mContext,mPreview);
+		//Tell the parent activity who will receive the takePicture() callback
 	    setImageHandler(mCatchoomImageHandler);
 
 		//Set the button to take pictures.
 		mSnapPhotoButton= (Button) findViewById(R.id.cameraButton);
   		mSnapPhotoButton.setOnClickListener((OnClickListener)this);
-  	
+  		//Set the results view click event (go to url)
+  		mResultView.setOnClickListener((OnClickListener)this);
+  		
 		//Create the Catchoom object.
 		mCatchoom= new Catchoom();
 		mCatchoom.setResponseHandler((CatchoomResponseHandler)this); 
 		
-		mResultView.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				if(mResult!=null){
-					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
-					String url = mResult.getMetadata()
-							.getString("url");
-					if ((null != url)&&(!url.isEmpty())) {
-						// Little hack to prevent Uri parser to crash with
-						// malformed URLs
-						if (!url.matches("https?://.*"))
-							url = "http://" + url;
-						goToWeb.setData(Uri.parse(url));
-						startActivity(goToWeb);
-					}
-				}
-			}});
+	
 
-	}	
+	}
+	//Callback of the takePicture() function when a picture could be taken.
 	@Override
 	public void requestImageReceived(CatchoomImage image) {
 		mCatchoom.search(CatchoomApplication.token, image);		
 	}
 
+	//Callback of the takePicture() function when a picture could not be taken due to an error.
 	@Override
 	public void requestImageError(String error) {
 		Toast.makeText(mContext, "Error message received:" + error,
 				Toast.LENGTH_SHORT).show();
 	}
 
+	//Callback of the Catchoom.search() function when the search was completed succesfully
 	@SuppressWarnings("unchecked")
 	@Override
 	public void requestCompletedResponse(int requestCode, Object responseData) {
@@ -137,15 +128,17 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 		mSnapPhotoButton.bringToFront();
 		//The first result is the one with the highest score.
 		CatchoomSearchResponseItem bestMatch=null;
+		//If the array is not empty, then we have a succesful match
 		if(array.size()>0){
 			bestMatch= array.get(0);
 		}
 		updateContent(bestMatch);		
 	}
 
+	//Callback of the Catchoom.search() function when an error occurred while searching using the CRS.
 	@Override
 	public void requestFailedResponse(CatchoomErrorResponseItem responseError) {
-		// Notify the error using Toasts. Don't finish the Camera Activity.
+		// Notify the error using Toasts.
 		if (null == responseError) {
 			Toast.makeText(mContext, "Connection error", Toast.LENGTH_SHORT)
 					.show();
@@ -162,17 +155,11 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 				Toast.makeText(mContext,"The request has failed. Try again later",Toast.LENGTH_SHORT).show();
 			}
 		}
+		//Start again
 		mSnapPhotoButton.setVisibility(View.VISIBLE);
 		mSnapPhotoButton.bringToFront();
 		mPreview.removeView(mScanningBarView);
 		restartCamera();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		//Tell the Catchoom object who  will receive the responses 
-		mCatchoom.setResponseHandler((CatchoomResponseHandler) this);
 	}
 
 	@Override
@@ -185,6 +172,21 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 					break;
 				case STATE_DONE:
 					restartCamera();
+				}
+				break;
+			case R.id.result:
+				if(mResult!=null){
+					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
+					String url = mResult.getMetadata()
+							.getString("url");
+					if ((null != url)&&(!url.isEmpty())) {
+						// Little hack to prevent Uri parser to crash with
+						// malformed URLs
+						if (!url.matches("https?://.*"))
+							url = "http://" + url;
+						goToWeb.setData(Uri.parse(url));
+						startActivity(goToWeb);
+					}
 				}
 		}
 	}

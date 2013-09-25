@@ -60,6 +60,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Make the activity fullscreen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.finder_camera);
@@ -76,45 +77,33 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	     * 		NOTE: Your FrameLayout must have layout_width and layout_height set to match_parent
 		 */		
 		setCameraParams(mContext,mPreview);
+		//Tell the parent activity who will receive the startFinding() callbacks
 	    setImageHandler(mCatchoomImageHandler);
 
 		//Set the button to take pictures.
 		mSnapPhotoButton= (Button) findViewById(R.id.cameraButton);
   		mSnapPhotoButton.setOnClickListener((OnClickListener)this);
-  	
+  		//Set the results view click event (go to url)
+  		mResultView.setOnClickListener((OnClickListener)this);
+  		
 		//Create the Catchoom object.
 		mCatchoom= new Catchoom();
 		mCatchoom.setResponseHandler((CatchoomResponseHandler)this); 
 		
-		mResultView.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View arg0) {
-				if(mResult!=null){
-					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
-					String url = mResult.getMetadata()
-							.getString("url");
-					if ((null != url)&&(!url.isEmpty())) {
-						// Little hack to prevent Uri parser to crash with
-						// malformed URLs
-						if (!url.matches("https?://.*"))
-							url = "http://" + url;
-						goToWeb.setData(Uri.parse(url));
-						startActivity(goToWeb);
-					}
-				}
-			}});
+		
 	}	
+	//Callback of the startFinding function. It will periodically receive frames.
 	@Override
 	public void requestImageReceived(CatchoomImage image) {
 		mCatchoom.search(CatchoomApplication.token, image);		
 	}
-
+	//Callback of the startFinding function if some problem occurred decoding frames
 	@Override
 	public void requestImageError(String error) {
 		Toast.makeText(mContext, "Error message received:" + error,
 				Toast.LENGTH_SHORT).show();
 	}
-
+	//Callback of the Catchoom.search() function when the search was completed succesfully
 	@SuppressWarnings("unchecked")
 	@Override
 	public void requestCompletedResponse(int requestCode, Object responseData) {
@@ -144,6 +133,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
 		}
 	}
 
+	//Callback of the Catchoom.search() function when an error occurred while searching using the CRS.
 	@Override
 	public void requestFailedResponse(CatchoomErrorResponseItem responseError) {
 		// Notify the error using Toasts. Don't finish the Camera Activity.
@@ -171,12 +161,11 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	}
 
 	@Override
-	public void onResume() {
-		super.onResume();
-		//Tell the Catchoom object who  will receive the responses 
-		mCatchoom.setResponseHandler((CatchoomResponseHandler) this);
+	public void onPause() {
+		super.onPause();
+		//Stop finding onPause, cancel the scanning bar, etc.
+		cancel();
 	}
-
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
@@ -192,6 +181,21 @@ public class FinderActivity extends CatchoomFinderActivity implements
 					restart();
 					break;
 				}
+				break;
+			case R.id.result:
+				if(mResult!=null){
+					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
+					String url = mResult.getMetadata()
+							.getString("url");
+					if ((null != url)&&(!url.isEmpty())) {
+						// Little hack to prevent Uri parser to crash with
+						// malformed URLs
+						if (!url.matches("https?://.*"))
+							url = "http://" + url;
+						goToWeb.setData(Uri.parse(url));
+						startActivity(goToWeb);
+					}
+				}
 		}
 	}
 	private void cancel(){
@@ -199,9 +203,9 @@ public class FinderActivity extends CatchoomFinderActivity implements
 		mPreview.removeView(mScanningBarView);
 		mSnapPhotoButton.setText(R.string.button_start_scanning);
 		mButtonState=STATE_START;
-		//TODO: Should we cancel incoming results if the user pressed stop?
 	}
 	private void restart(){
+		//Restart the camera preview
 		restartPreview();
 		mShadowLayout.setVisibility(View.INVISIBLE);
 		if (Build.VERSION.SDK_INT < 11) {
@@ -214,10 +218,12 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	
 	private void scan(){
 		mShadowLayout.setVisibility(View.INVISIBLE);
+		//Start receiving video frames
 		startFinding();
+		//Create an scanning-effect animation
 		mScanningBarView= new ScanningBar(mContext,mPreview);
-		//Start scanning
 		mScanningBarView.initScan();
+		//Change the button state and text
 		mSnapPhotoButton.setText(R.string.button_stop_scanning);
 		mButtonState=STATE_SCANNING;
 	}
