@@ -1,7 +1,9 @@
-// (c) Catchoom Technologies S.L.
+//
+// © Catchoom Technologies S.L.
 // Licensed under the MIT license.
-// https://raw.github.com/catchoom/android-crc/master/LICENSE
-// All warranties and liabilities are disclaimed.
+// http://github.com/Catchoom/catchoom-example-android/blob/master/LICENSE
+//  All warranties and liabilities are disclaimed.
+//
 package com.catchoom.crsexample.activity;
 
 import java.util.ArrayList;
@@ -34,7 +36,6 @@ import com.catchoom.camera.CatchoomImageHandler;
 import com.catchoom.crsexample.application.CatchoomApplication;
 import com.catchoom.crsexample.widget.ScanningBar;
 import com.example.crsexampleapp.R;
-
 
 public class FinderActivity extends CatchoomFinderActivity implements
 		CatchoomResponseHandler, CatchoomImageHandler,OnClickListener {
@@ -127,7 +128,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
 			freezeCameraView();
 			//Remove the scanning bar
 			mPreview.removeView(mScanningBarView);
-			//Little trick to set alpha in a view in a device with API level <11
+			//Little trick to set alpha transparency in a view for device with API level <11
 			if (Build.VERSION.SDK_INT < 11) {
 		        final AlphaAnimation animation = new AlphaAnimation(0.6f, 0.6f);
 		        animation.setDuration(0);
