@@ -100,7 +100,7 @@ Create and initialize a Catchoom object and call setResponseHandler to allow you
     Catchoom catchoom= new Catchoom();
     catchoom.setResponseHandler((CatchoomResponseHandler)this);
 ```
-You can perform search by passing a CatchoomImage and your collection token to your Catchoom object. In this case, we will search for the image we received in the requestImageReceived callback. The request is executed asynchronously, so the operations may take several seconds (between 1 and 5 on average) depending on various factors like the Internet connection, the performance of the device, etc. 
+You can perform search by passing a CatchoomImage and [your collection token](http://catchoom.com/documentation/where-do-i-get-my-token) to your Catchoom object. In this case, we will search for the image we received in the requestImageReceived callback. The request is executed asynchronously, so the operations may take several seconds (between 1 and 5 on average) depending on various factors like the Internet connection, the performance of the device, etc. 
 ```java
     public void requestImageReceived(CatchoomImage image) {
        catchoom.search("your_collection_token", image);
