@@ -33,28 +33,30 @@ Requirements
 ------------
 To build the project you will need Eclipse, the Android SDK and Android ADT tools. The SDK works from Android API level 9 (Android 2.3 Gingerbread), but the project is compiled with Android API 18. If you don’t have it, you must download it from the Android SDK Manager.
   
-You will also need a copy of our sdk. Please [contact us](http://catchoom.com/contact/?message=Hi%20Catchoom,%0D%0DI%20am%20interested%20in%20getting%20the%20Catchoom%20SDK%20for%20Android) to obtain a copy.
+You will also need our sdk. Please [contact us](http://catchoom.com/contact/?message=Hi%20Catchoom,%0D%0DI%20am%20interested%20in%20getting%20the%20Catchoom%20SDK%20for%20Android) to obtain a copy.
 
 Quick Start
 -----------
-The **easiest** way to get started is downloading this project from, and trying the example application with your images from the CRS. The example app already contains all dependencies added to the project.
+The **easiest** way to get started is downloading this project, and trying the example application with your images from the CRS. The example app already contains all dependencies added to the project.
 
-Once you have the SDK, in order to get the example app running follow these steps:
+Once you have the SDK (file catchoom-sdk-android.jar), you can get the example app running by following these steps:
 
 1. Clone this repository
 2. Import it to your Eclipse workspace:  Click on File-> Import -> Existing Projects into Workspace -> Select root directory-> Select the root of the project and click Finish.
 3. Paste the archive catchoom-sdk-android.jar into the libs/ folder.
 4. Configure your collection token by setting the variable “token” in the “CatchoomApplication.java” class.
 
-This should be enough to start [recognising things](http://catchoom.com/documentation/what-kind-of-objects-do-we-recognize/).
+This is enough to start [recognising things](http://catchoom.com/documentation/what-kind-of-objects-do-we-recognize/).
 
 Example App
 -----------
-Just by adding a few lines in your application, you can enable it to show a camera preview and  search by taking a picture or capturing video frames from the camera.  To take pictures you must use the **CatchoomSingleShotActivity** class, and to continuously capture video frames you must use the **CatchoomFinderActivity** class. In this example we will use the **CatchoomSingleShotActivity** to take pictures (for continuous capturing refer to the FinderActivity.java class in the example app). Finally we will explain how to compare the images obtained with the ones in your collection using the **Catchoom** class.
+Just by adding a few lines in your application, you can enable it to show a camera preview and search by taking a picture or capturing video frames from the camera.  To take pictures you must use the **CatchoomSingleShotActivity** class. To continuously capture video frames you must use the **CatchoomFinderActivity** class.
+
+In this example we will use the **CatchoomSingleShotActivity** to take pictures (for continuous capturing refer to the FinderActivity.java class in the example app). Finally we will explain how to compare the images obtained with the ones in your collection using the **Catchoom** class.
 
 
-**Take the picture**
- 
+**Capturing query images**
+
 Start by making your activity extend from CatchoomSingleShotActivity instead of android Activity, and implementing the CatchoomImageHandler interface:
 
 ```java
@@ -85,7 +87,7 @@ When the picture is available, you will receive a call to your requestImageRecei
 ```
 Finally, if you want to take more pictures, you have to call restartPreview()  after receiving the requestImageReceived callback.
 
-**Compare the picture obtained against your collection**
+**Comparing query images against your collection**
 
 Make your activity implement the CatchoomResponseHandler interface. 
 ```java
@@ -121,9 +123,10 @@ A CatchoomSearchResponseItem encapsulates a result in an easy to access class. Y
         String custom = metadata.getString("custom");
 ```
 A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason, or null if the connection could not be established.
-Now that you are familiar with the SDK, take a look at the provided example app. It also contains a scanning-effect you can use while searching, and it shows you how to parse the results.
 
-To switch from the Single Shot mode to the Finder Mode, you can go to the provided example app and change CAMERA_USED from CAMERA_TYPE_SINGLE_SHOT to CAMERA_TYPE_FINDER in the  CatchoomApplication.java class.
+Now that you are familiar with the SDK, take a look at the provided example app. It contains a scanning-effect you can use while searching, and it shows you how to parse the results.
+
+To switch from the Single Shot to the Finder Mode, you can go to the provided example app and change CAMERA_USED from CAMERA_TYPE_SINGLE_SHOT to CAMERA_TYPE_FINDER in the  CatchoomApplication.java class.
 
 Adding the SDK to your app
 --------------------------
