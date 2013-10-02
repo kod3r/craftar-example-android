@@ -35,7 +35,7 @@ To build the project you will need [Eclipse, the Android SDK and Android ADT too
 
 The SDK works from Android API level 9 (Android 2.3 Gingerbread), but the project is compiled with Android API 18. If you don’t have it, you must download it from the [Android SDK Manager](http://developer.android.com/tools/help/sdk-manager.html).
   
-You will also need our sdk. Please [contact us](http://catchoom.com/contact/?message=Hi%20Catchoom,%0D%0DI%20am%20interested%20in%20getting%20the%20Catchoom%20SDK%20for%20Android) to obtain a copy.
+You will also need our sdk. Please [contact us](http://catchoom.com/developer/sdk/) to obtain a copy.
 
 Quick Start
 -----------
