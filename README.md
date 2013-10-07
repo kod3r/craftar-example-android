@@ -134,24 +134,30 @@ To switch from the Single Shot to the Finder Mode, you can go to the provided ex
 Using your own proxy server
 ---------------------------
 
-If you want the SDK to interact with your own proxy server instead of directly interacting with the CRS, call `setUrlSearch(String url)` and `setUrlSearch(String url)` with your proxy url after instantiating your Catchoom() object.
+Do you need extra control when implementing the backend application logic? If yes, consider configuring the SDK to
+interact with your own backend acting as a proxy server instead of communicating directly with the CRS. Simply call
+```java setUrlSearch(String url)``` with your proxy url after instantiating your Catchoom() object.
 
-If you use a proxy you can add extended fields to your items. But be careful. Our [CRS recognition API](http://catchoom.com/documentation/api/recognition/) returns a JSON object with a given structure. You MUST return a JSON object with the same structure (including your extended fields)
-, otherwise the SDK will not be able to decode the responses. If you want to extend your items, you must do the following:
+If you use a proxy you can add extended fields to your items. But be careful. Our 
+[CRS recognition API](http://catchoom.com/documentation/api/recognition/) returns a JSON 
+object with a given structure. You MUST return a JSON object with the same structure (including 
+your extended fields), otherwise the SDK will not be able to decode the responses. If you want to extend 
+your items, you must do the following:
 
-1. Make a class `ExtendedItem` that extends `CatchoomSearchResponseItem` in your Android project.
+* Make a class `ExtendedItem` that extends `CatchoomSearchResponseItem` in your Android project.
 
 ```
 Class ExtendedItem extends CatchoomSearchResponseItem
 ```
-2. After instantiating your Catchoom() object, call `setSearchResponseItemClass(ExtendedItem.class)`. 
+
+* After instantiating your Catchoom() object, call `setSearchResponseItemClass(ExtendedItem.class)`. 
 
 ```
 Catchoom catchoom= new Catchoom();
 catchoom.setSearchResponseItemClass(ExtendedItem.class);
 ```
 
-3. In your `ExtendedItem`, call `getJson()` to retrieve the full original JSON. Decode your custom fields from the original JSON in your Extended Item class the way you prefer.
+* In your `ExtendedItem`, call `getJson()` to retrieve the full original JSON. Decode your custom fields from the original JSON in your Extended Item class the way you prefer.
 
 ```
 Class ExtendedItem extends CatchoomSearchResponseItem{
@@ -159,10 +165,9 @@ Class ExtendedItem extends CatchoomSearchResponseItem{
 		return getJson().getString("your_custom_field_key");
 	}
 }
-
 ```
 
-4. In your CatchoomResponseHandler `requestCompletedResponse(int requestCode, Object responseData)` method, cast the `responseData` object to an `ArrayList<ExtendedItem>` 
+* In your CatchoomResponseHandler `requestCompletedResponse(int requestCode, Object responseData)` method, cast the `responseData` object to an `ArrayList<ExtendedItem>` 
 
 ```
 @Override
