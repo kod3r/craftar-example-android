@@ -144,8 +144,9 @@ Using your own proxy server
 ---------------------------
 
 Do you need extra control when implementing the backend application logic? If yes, consider configuring the SDK to
-interact with your own backend acting as a proxy server instead of communicating directly with the CRS. Simply call
-```java setUrlSearch(String url)``` with your proxy url after instantiating your Catchoom() object.
+interact with your own backend acting as a proxy server instead of communicating directly with the CRS. Simply call 
+`setSearchUrl(String url)` and `setConnectUrl(String url)` with your proxy url after instantiating your Catchoom() object.
+
 
 If you use a proxy you can add extended fields to your items. But be careful. Our 
 [CRS recognition API](http://catchoom.com/documentation/api/recognition/) returns a JSON 
