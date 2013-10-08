@@ -117,14 +117,23 @@ If the search was successful you will receive a call to your requestCompletedRes
 ```
 A CatchoomSearchResponseItem encapsulates a result in an easy to access class. You can retrieve several fields from the item, such as the name of the item, the score, the thumbnail, the url, etc.
 ```java
-        int score = bestMatch.getScore();
-        String id = bestMatch.getId();
-        Bundle metadata= bestMatch.getMetadata();
-        String name = metadata.getString("name");
-        String thumbnailUrl = metadata.getString("thumbnail");
-        String url = metadata.getString("url");
-        String custom = metadata.getString("custom");
+    String item_id= bestMatch.getItemId();
+    String image_id= bestMatch.getImageId();
+    int score = bestMatch.getScore();
+    String name = bestMatch.getName();
+    String url = bestMatch.getUrl();
+    String thumbnail= bestMatch.getThumbnail();
+    String custom = bestMatch.getCustom(); 
+    double[][] bbox= bestMatch.getBBox();
+   
 ```
+If you want to retrieve the 'custom' and the 'bbox' fields above, you will have to tell your Catchoom object to request them before performing the search. To do it, simply set the boolean parameters `crsRequestBBoxes` and `crsRequestCustom` to 'true' (their default value is 'false').
+```java
+    catchoom.crsRequestBBoxes=true;
+    catchoom.crsRequestCustom=true;
+	
+```
+
 A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason, or null if the connection could not be established.
 
 Now that you are familiar with the SDK, take a look at the provided example app. It contains a scanning-effect you can use while searching, and it shows you how to parse the results.
