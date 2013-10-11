@@ -89,7 +89,6 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 		//Create the Catchoom object.
 		mCatchoom= new Catchoom();
 		mCatchoom.setResponseHandler((CatchoomResponseHandler)this); 
-		
 	
 
 	}
@@ -177,8 +176,8 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 			case R.id.result:
 				if(mResult!=null){
 					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
-					String url = mResult.getMetadata()
-							.getString("url");
+					String url = mResult.getUrl();
+						
 					if ((null != url)&&(!url.isEmpty())) {
 						// Little hack to prevent Uri parser to crash with
 						// malformed URLs
@@ -216,9 +215,9 @@ public class SingleShotActivity extends CatchoomSingleShotActivity implements
 		TextView itemName = (TextView) findViewById(R.id.itemName);
 		ImageView viewport = (ImageView) findViewById(R.id.viewport);
 		if(item!=null){
-			Bundle metadata= item.getMetadata();
-			String name = metadata.getString("name");
-			String thumbnailUrl = metadata.getString("thumbnail");
+
+			String name = item.getName();
+			String thumbnailUrl = item.getThumbnail();
 			itemName.setText(name);
 			if (null != thumbnailUrl) {
 				CatchoomApplication.imageManager.loadImageInView(thumbnailUrl, viewport);

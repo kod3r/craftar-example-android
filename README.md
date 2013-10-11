@@ -53,10 +53,11 @@ This is enough to start [recognising things](http://catchoom.com/documentation/w
 
 Example App
 -----------
-Just by adding a few lines in your application, you can enable it to show a camera preview and search by taking a picture or capturing video frames from the camera.  To take pictures you must use the **CatchoomSingleShotActivity** class. To continuously capture video frames you must use the **CatchoomFinderActivity** class.
+Just by adding a few lines in your application, you can enable it to show a camera preview and search by taking a picture or capturing video frames from the camera.  To take pictures you must use the **CatchoomSingleShotActivity** or **CatchoomSingleShotFragment** class. To continuously capture video frames you must use the **CatchoomFinderActivity** or **CatchoomFinderFragment** class.
+
+If you want to use CatchoomSingleShotFragment or CatchoomFinderFragment, please read some considerations [here](https://github.com/Catchoom/catchoom-example-android/blob/master/doc/Fragments.md).
 
 In this example we will use the **CatchoomSingleShotActivity** to take pictures (for continuous capturing refer to the FinderActivity.java class in the example app). Finally we will explain how to compare the images obtained with the ones in your collection using the **Catchoom** class.
-
 
 **Capturing query images**
 
