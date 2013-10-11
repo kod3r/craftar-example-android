@@ -1,3 +1,6 @@
+Using Fragments with the Catchoom-SDK
+-------------------------------------
+
 Note that our SDK supports android versions from API level 9 (Gingerbread 2.3). Since Fragments require API Level 11 or greater, we're using the support library 'android-support-v4.jar'. To use Fragments, you must include this library in your project libs/ folder. 
 
 Also note that the activity that creates your Fragment must extend from FragmentActivity. 
