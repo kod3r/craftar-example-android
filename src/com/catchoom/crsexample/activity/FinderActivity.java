@@ -88,7 +88,6 @@ public class FinderActivity extends CatchoomFinderActivity implements
 		//Create the Catchoom object.
 		mCatchoom= new Catchoom();
 		mCatchoom.setResponseHandler((CatchoomResponseHandler)this);
-		//mCatchoom.setSearchUrl("http://192.168.1.55/v1/search.php");
 		
 	}	
 	//Callback of the startFinding function. It will periodically receive frames.
