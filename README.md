@@ -133,11 +133,13 @@ If you want to retrieve the 'custom' and the 'bbox' fields above, you will have 
     catchoom.crsRequestBBoxes=true;
     catchoom.crsRequestCustom=true;
 ```
+<!--
 If you want to embed the tracking data or the content, you will have to set the fields `crsEmbedContent` and `crsEmbedTracking` to true. If you don't request it, the CRS will return you a URL instead of the data embedded.
 ```java
     catchoom.crsEmbedContent=false;
     catchoom.crsEmbedTrackingData=false;
 ```
+-->
 
 A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason. You can compare the error against all the possible errors in  CatchoomErrorResponseItem.ErrorCodes for more information.
 
