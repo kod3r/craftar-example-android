@@ -21,8 +21,7 @@ public class CatchoomApplication extends Application {
 	//Which Camera will the app use
 	public static int CAMERA_USED=CAMERA_TYPE_SINGLE_SHOT;
 	//FIXME: Put here your collection token. (Need Help? Go to http://catchoom.com/documentation/where-do-i-get-my-token )
-	public static final String token="";
-	
+	public static final String token="your_collection_token";
 	@Override
 	public void onCreate() {
 		super.onCreate();

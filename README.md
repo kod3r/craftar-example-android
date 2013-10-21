@@ -121,7 +121,7 @@ A CatchoomSearchResponseItem encapsulates a result in an easy to access class. Y
     String item_id= bestMatch.getItemId();
     String image_id= bestMatch.getImageId();
     int score = bestMatch.getScore();
-    String name = bestMatch.getName();
+    String name = bestMatch.getItemName();
     String url = bestMatch.getUrl();
     String thumbnail= bestMatch.getThumbnail();
     String custom = bestMatch.getCustom(); 
@@ -132,10 +132,14 @@ If you want to retrieve the 'custom' and the 'bbox' fields above, you will have 
 ```java
     catchoom.crsRequestBBoxes=true;
     catchoom.crsRequestCustom=true;
-	
+```
+If you want to embed the tracking data or the content, you will have to set the fields `crsEmbedContent` and `crsEmbedTracking` to true. If you don't request it, the CRS will return you a URL instead of the data embedded.
+```java
+    catchoom.crsEmbedContent=false;
+    catchoom.crsEmbedTrackingData=false;
 ```
 
-A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason, or null if the connection could not be established.
+A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason. You can compare the error against all the possible errors in  CatchoomErrorResponseItem.ErrorCodes for more information.
 
 Now that you are familiar with the SDK, take a look at the provided example app. It contains a scanning-effect you can use while searching, and it shows you how to parse the results.
 
