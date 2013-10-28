@@ -1,4 +1,3 @@
-//
 // © Catchoom Technologies S.L.
 // Licensed under the MIT license.
 // http://github.com/Catchoom/catchoom-example-android/blob/master/LICENSE
@@ -16,9 +15,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.animation.AlphaAnimation;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -60,7 +59,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//Make the activity fullscreen
+		//Make the activity full-screen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.finder_camera);
@@ -88,7 +87,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
   		
 		//Create the Catchoom object.
 		mCatchoom= new Catchoom();
-		mCatchoom.setResponseHandler((CatchoomResponseHandler)this); 
+		mCatchoom.setResponseHandler((CatchoomResponseHandler)this);
 		
 	}	
 	//Callback of the startFinding function. It will periodically receive frames.
@@ -107,55 +106,55 @@ public class FinderActivity extends CatchoomFinderActivity implements
 	@Override
 	public void requestCompletedResponse(int requestCode, Object responseData) {
 		
-		ArrayList<CatchoomSearchResponseItem> array = (ArrayList<CatchoomSearchResponseItem>) responseData;
-		//If we found at least one match, update the content just if the user have not pressed "Stop" before.
-		if ((array.size() > 0)&&(mButtonState==STATE_SCANNING)) {
-			//Stop receiving images
-			stopFinding();
-			//Freeze the camera preview
-			freezeCameraView();
-			//Remove the scanning bar
-			mPreview.removeView(mScanningBarView);
-			//Little trick to set alpha transparency in a view for device with API level <11
-			if (Build.VERSION.SDK_INT < 11) {
-		        final AlphaAnimation animation = new AlphaAnimation(0.6f, 0.6f);
-		        animation.setDuration(0);
-		        animation.setFillAfter(true);
-		        mShadowLayout.startAnimation(animation);
-		    }
-			mShadowLayout.setVisibility(View.VISIBLE);
-			mResultView.setVisibility(View.VISIBLE);
-			mSnapPhotoButton.bringToFront();
-			//The first result is the one with the highest score.
-			CatchoomSearchResponseItem bestMatch= array.get(0);
-			updateContent(bestMatch);
+		if(requestCode==Catchoom.Request.CONNECT_REQUEST)
+		{
+			//Connection accepted
+			Log.i(CatchoomApplication.APP_LOG_TAG,"Connection established");
+			return;
+		}
+		else if(requestCode==Catchoom.Request.SEARCH_REQUEST){
+			ArrayList<CatchoomSearchResponseItem> array = (ArrayList<CatchoomSearchResponseItem>) responseData;
+			//If we found at least one match, update the content just if the user have not pressed "Stop" before.
+			if ((array.size() > 0)&&(mButtonState==STATE_SCANNING)) {
+				//Stop receiving images
+				stopFinding();
+				//Freeze the camera preview
+				freezeCameraView();
+				//Remove the scanning bar
+				mPreview.removeView(mScanningBarView);
+				//Little trick to set alpha transparency in a view for device with API level <11
+				if (Build.VERSION.SDK_INT < 11) {
+			        final AlphaAnimation animation = new AlphaAnimation(0.6f, 0.6f);
+			        animation.setDuration(0);
+			        animation.setFillAfter(true);
+			        mShadowLayout.startAnimation(animation);
+			    }
+				mShadowLayout.setVisibility(View.VISIBLE);
+				mResultView.setVisibility(View.VISIBLE);
+				mSnapPhotoButton.bringToFront();
+				//The first result is the one with the highest score.
+				CatchoomSearchResponseItem bestMatch= array.get(0);
+				updateContent(bestMatch);
+			}
 		}
 	}
 
 	//Callback of the Catchoom.search() function when an error occurred while searching using the CRS.
 	@Override
-	public void requestFailedResponse(CatchoomErrorResponseItem responseError) {
-		// Notify the error using Toasts. Don't finish the Camera Activity.
-		if (null == responseError) {
-			Toast.makeText(mContext, "Connection error", Toast.LENGTH_SHORT)
-					.show();
-		} else {
-			Log.d(TAG,
-					responseError.getErrorCode() + ": "
-							+ responseError.getErrorPhrase());
-			switch (responseError.getErrorCode()) {
-			case 401:
-			case 403:
-				Toast.makeText(mContext, "Invalid token", Toast.LENGTH_SHORT)
-						.show();
+	public void requestFailedResponse(int requestCode, CatchoomErrorResponseItem responseError) {
+		Log.e(TAG,"Error("+responseError.getErrorCode()+"):"+responseError.getErrorMessage());
+		int errorCode= responseError.getErrorCode();
+		//You can check all type of errors and decide what to do.Here are some examples
+		switch(errorCode){
+			case CatchoomErrorResponseItem.ErrorCodes.IMAGE_NO_DETAILS:
+				Toast.makeText(mContext,"Please, take a picture of an object with more details", Toast.LENGTH_LONG).show();
 				break;
-			case 400:
-			case 500:
+			case CatchoomErrorResponseItem.ErrorCodes.CONNECTION_ERROR:
+				Toast.makeText(mContext,"Connection error", Toast.LENGTH_LONG).show();
+				break;
 			default:
-				Toast.makeText(mContext,
-						"The request has failed. Try again later",
-						Toast.LENGTH_SHORT).show();
-			}
+				Toast.makeText(mContext,"Error", Toast.LENGTH_LONG).show();
+				break;
 		}
 	}
 
@@ -189,8 +188,7 @@ public class FinderActivity extends CatchoomFinderActivity implements
 					Intent goToWeb = new Intent(Intent.ACTION_VIEW);
 					String url = mResult.getUrl();
 					if ((null != url)&&(!url.isEmpty())) {
-						// Little hack to prevent Uri parser to crash with
-						// malformed URLs
+						// Little hack to prevent Uri parser to crash with malformed URLs
 						if (!url.matches("https?://.*"))
 							url = "http://" + url;
 						goToWeb.setData(Uri.parse(url));
@@ -228,23 +226,24 @@ public class FinderActivity extends CatchoomFinderActivity implements
 		mSnapPhotoButton.setText(R.string.button_stop_scanning);
 		mButtonState=STATE_SCANNING;
 	}
-	private void updateContent(CatchoomSearchResponseItem item) {
+	private void updateContent(CatchoomSearchResponseItem item) {	
+		TextView itemName = (TextView) findViewById(R.id.itemName);
+		ImageView viewport = (ImageView) findViewById(R.id.viewport);
 		if(item!=null){
-			TextView itemName = (TextView) findViewById(R.id.itemName);
-			ImageView viewport = (ImageView) findViewById(R.id.viewport);
-	
-	
-			String name = item.getName();
+
+			String name = item.getItemName();
 			String thumbnailUrl = item.getThumbnail();
-			
 			itemName.setText(name);
 			if (null != thumbnailUrl) {
 				CatchoomApplication.imageManager.loadImageInView(thumbnailUrl, viewport);
-			}
-			mResult=item;
-			mSnapPhotoButton.setText(R.string.button_done);
-			mButtonState=STATE_DONE;
+			}	
+		}else{
+			viewport.setImageResource(R.drawable.viewport);
+			itemName.setText(R.string.no_match_found);
 		}
+		mSnapPhotoButton.setText(R.string.button_done);	
+		mResult=item;
+		mButtonState=STATE_DONE;
 	}
 
 }

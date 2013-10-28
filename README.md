@@ -66,7 +66,8 @@ Start by making your activity extend from CatchoomSingleShotActivity instead of 
 ```java
     public class SingleShotActivity extends CatchoomSingleShotActivity implements CatchoomImageHandler,CatchoomResponseHandler
 ``` 
-Setup the camera preview by making a call to setCameraParams with your Activity Context and the FrameLayout where you want to place your camera preview.
+Setup the camera preview by making a call to setCameraParams with your Activity Context and the FrameLayout 
+where you want to place your camera preview.
 ```java
     Context mContext=(Context) this;
     FrameLayout mPreview = (FrameLayout) findViewById(R.id.camera_preview); 
@@ -83,7 +84,9 @@ Call takePicture to take a picture and receive it in your CatchoomImageHandler.
         }
     });
 ```
-When the picture is available, you will receive a call to your requestImageReceived implementation with the picture taken. You can compare the given picture against your collection by calling the function search using a Catchoom object, as we will explain in the next section
+When the picture is available, you will receive a call to your requestImageReceived implementation 
+with the picture taken. You can compare the given picture against your collection by calling the 
+function search using a Catchoom object, as we will explain in the next section
 ```java
     public void requestImageReceived(CatchoomImage image) {
         //Here you can search the given image 
@@ -116,26 +119,45 @@ If the search was successful you will receive a call to your requestCompletedRes
             CatchoomSearchResponseItem bestMatch= results.get(0);
     }
 ```
-A CatchoomSearchResponseItem encapsulates a result in an easy to access class. You can retrieve several fields from the item, such as the name of the item, the score, the thumbnail, the url, etc.
+A CatchoomSearchResponseItem encapsulates a result in an easy to access class. You can retrieve 
+several fields from the item, such as the name of the item, the score, the thumbnail, the url, etc.
 ```java
     String item_id= bestMatch.getItemId();
     String image_id= bestMatch.getImageId();
     int score = bestMatch.getScore();
-    String name = bestMatch.getName();
+    String name = bestMatch.getItemName();
     String url = bestMatch.getUrl();
     String thumbnail= bestMatch.getThumbnail();
     String custom = bestMatch.getCustom(); 
     double[][] bbox= bestMatch.getBBox();
-   
 ```
-If you want to retrieve the 'custom' and the 'bbox' fields above, you will have to tell your Catchoom object to request them before performing the search. To do it, simply set the boolean parameters `crsRequestBBoxes` and `crsRequestCustom` to 'true' (their default value is 'false').
+If you want to retrieve the 'bbox' field above, you will have to tell your Catchoom object to 
+request it before performing the search. To do it, simply set the boolean parameter `crsRequestBBoxes` 
+to 'true' (it's default value is 'false').
+
 ```java
     catchoom.crsRequestBBoxes=true;
-    catchoom.crsRequestCustom=true;
-	
 ```
 
-A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason, or null if the connection could not be established.
+
+If you want to embed the custom data, you will have to set the field `crsEmbedCustom` to true. If 
+you don't request it, the CRS will return you a URL instead of the data embedded.
+
+```java
+    catchoom.crsEmbedCustom=true;
+```
+
+<!--
+If you want to embed the tracking data or the custom data, you will have to set the fields `crsEmbedCustom` 
+and `crsEmbedTracking` to true. If you don't request it, the CRS will return you a URL instead of the data embedded.
+
+```java
+    catchoom.crsEmbedCustom=true;
+    catchoom.crsEmbedTrackingData=true;
+```
+-->
+
+A search request can fail for several reasons. If a request fails, you will receive a callback to requestFailedResponse , with a CatchoomErrorResponseItem object describing the failure reason. You can compare the error against all the possible errors in  CatchoomErrorResponseItem.ErrorCodes for more information.
 
 Now that you are familiar with the SDK, take a look at the provided example app. It contains a scanning-effect you can use while searching, and it shows you how to parse the results.
 
