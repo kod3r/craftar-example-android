@@ -1,4 +1,4 @@
-![](https://github.com/Catchoom/catchoom-example-ios/blob/switch-to-craftar-examples/images/image04.png)
+![](images/image00.png)
 
 
 # CraftAR Mobile SDK
@@ -201,35 +201,35 @@ below.
 ### Creating your first app
 
 Once you have set up your project, it’s time to add code to start using
-the Catchoom SDK. There are four steps to do so:
+the Catchoom SDK. uncompress the zip and add the lib folder in your project. There are five steps to do so:
 
-1.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomImageHandler and CatchoomResponseHandler interface:
+1.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
 
 2.  initialize the SDK.
     ![](images/image11.png)
-  
-3.  Set up your token for the Cloud Recognition
-    Service:![](images/image01.png)
 
-4.  Set a camera view for the camera capture, you need to provide a
+3.  Set a camera view for the camera capture, you need to provide a
     CatchoomCameraView.
     ![](images/image02.png)
     ![](images/image03.png)
 
-5.  Start using the CloudRecognition class:
+4.  Start using the CloudRecognition class:
 
     a. Use the CatchoomCloudRecognition to receive search
     responses: ![](images/image04.png)
     
-    b. Start searching for objects to recognize from the camera
+    b.  Set up your token for the Cloud Recognition
+    Service:![](images/image01.png)
+    
+    c. Start searching for objects to recognize from the camera
     capture ![](images/image05.png)
     
-    c. Implement the results callback to receive tracking data and
+    d. Implement the results callback to receive tracking data and
     contents: ![](images/image06.png)
 
-6.  Start the augmented reality experience:
+5.  Start the augmented reality experience:
 
-    a. Get the tracking interface: ![](images/image09.png)
+    a. Get the tracking interface: ![](images/image12.png)
     
     **Note:** this step needs the preview to be initialized. Otherwise, the sdk
     will return nil.
