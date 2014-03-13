@@ -202,16 +202,17 @@ below.
 
 Once you have set up your project, it’s time to add code to start using
 the Catchoom SDK. There are four steps to do so:
+1. Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomImageHandler and CatchoomResponseHandler interface:
 
-1.  Set up your token for the Cloud Recognition
+2.  Set up your token for the Cloud Recognition
     Service:![](images/image01.png)
 
-2.  Set a camera view for the camera capture, you need to provide a
+3.  Set a camera view for the camera capture, you need to provide a
     CatchoomCameraView.
     ![](images/image02.png)
     ![](images/image03.png)
 
-3.  Start using the CloudRecognition Interface:
+4.  Start using the CloudRecognition Interface:
 
     a. Use the CatchoomCloudRecognition to receive search
     responses: ![](images/image04.png)
@@ -222,7 +223,7 @@ the Catchoom SDK. There are four steps to do so:
     c. Implement the results callback to receive tracking data and
     contents: ![](images/image06.png)
 
-4.  Start the augmented reality experience:
+5.  Start the augmented reality experience:
 
     a. Get the tracking interface: ![](images/image09.png)
     
