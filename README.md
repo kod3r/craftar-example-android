@@ -202,16 +202,6 @@ frameworks/libraries that have to be linked and some compilation
 settings to be set. To proceed with the integration follow the steps
 below.
 
-
-##### Add the other framework and library dependencies to your project:
-
-
-##### Import everything provided in the CathoomSDK directory:
-
-
-##### Set the Build Settings to produce a CatchoomSDK compatible app.
-
-
 ### Creating your first app
 
 Once you have set up your project, it’s time to add code to start using
