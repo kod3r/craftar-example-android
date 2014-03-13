@@ -12,7 +12,7 @@ Table of contents
 - [4. SDK architecture](#4-sdk-architecture)
 - [5. SDK integration](#5-sdk-integration)
     - [5.1 Examples app](#51-examples-app)
-    - [5.2 Integration on Android native apps](#52-integration-on-ios-native-apps)
+    - [5.2 Integration on Android native apps](#52-integration-on-Android-native-apps)
         - [Requirements](#requirements)
         - [Quick Start](#quick-start)
         - [Adding the SDK to your app](#adding-the-sdk-to-your-app)
@@ -202,6 +202,7 @@ below.
 
 Once you have set up your project, it’s time to add code to start using
 the Catchoom SDK. There are four steps to do so:
+
 1. Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomImageHandler and CatchoomResponseHandler interface:
 
 2.  Set up your token for the Cloud Recognition
