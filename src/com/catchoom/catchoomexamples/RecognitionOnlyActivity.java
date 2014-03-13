@@ -56,7 +56,7 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 		CatchoomSDK.init(getApplicationContext(),this);
 		
 		//Get the camera to be able to do single-shot (if you just use finder-mode, this is not necessary)
-		mCamera= CatchoomSDK.getOFCamera();
+		mCamera= CatchoomSDK.getCamera();
 		mCamera.setImageHandler(this); //Tell the camera who will receive the image after takePicture()
 		
 		//Setup cloud recognition

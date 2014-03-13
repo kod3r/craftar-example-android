@@ -52,7 +52,7 @@ public class ARProgrammaticallyActivity extends CatchoomActivity implements Catc
 		CatchoomSDK.init(getApplicationContext(),this);
 		
 		//Get the camera to be able to do single-shot (if you just use finder-mode, this is not necessary)
-		mCamera= CatchoomSDK.getOFCamera();
+		mCamera= CatchoomSDK.getCamera();
 		mCamera.setImageHandler(this); //Tell the camera who will receive the image after takePicture()
 		
 		//Setup the finder-mode: Note! PRESERVE THE ORDER OF THIS CALLS
@@ -86,7 +86,7 @@ public class ARProgrammaticallyActivity extends CatchoomActivity implements Catc
 				// Create an ImageContent from a local image (in raw/res, copied to the sdcard by the SDK)
 				String url = (getAppDataDirectory() + "/ar_programmatically_content.png");
 				CatchoomTrackingContentImage imageContent = new CatchoomTrackingContentImage(url);
-				imageContent.mWrapMode = CatchoomTrackingContent.ContentWrapMode.WRAP_MODE_ASPECT_FIT;
+				imageContent.setWrapMode(CatchoomTrackingContent.ContentWrapMode.WRAP_MODE_ASPECT_FIT);
 				
 				// Add content to the item
 				myARItem.addContent(imageContent);
