@@ -218,25 +218,25 @@ the Catchoom SDK. There are four steps to do so:
 3.  Start using the CloudRecognition Interface:
 
     a. Use the CatchoomCloudRecognition to receive search
-    responses:![](images/image04.png)
+    responses: ![](images/image04.png)
     
     b. Start searching for objects to recognize from the camera
-    capture![](images/image05.png)
+    capture ![](images/image05.png)
     
     c. Implement the results callback to receive tracking data and
-    contents:![](images/image06.png)
+    contents: ![](images/image06.png)
 
 4.  Start the augmented reality experience:
 
-    a. Get the tracking interface:![](images/image09.png)
+    a. Get the tracking interface: ![](images/image09.png)
     
     **Note:** this step needs the preview to be initialized. Otherwise, the sdk
     will return nil.
     
     b. Obtain the AR items and add them to the tracking
-    module:![](images/image07.png)
+    module: ![](images/image07.png)
     
-    c. Start tracking:![](images/image08.png)
+    c. Start tracking: ![](images/image08.png)
 
 6. SDK Documentation
 ====================
