@@ -176,7 +176,8 @@ To run the examples follow these steps:
 To build the project or use the library, you will need:
 Permissions
 ![](images/image10.png)
-Libs
+
+libs
   android-support-v4.jar,
   nineoldandroids-2.4.0.jar,
   sanselan-0.97-incubator.jar
