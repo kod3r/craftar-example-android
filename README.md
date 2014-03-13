@@ -175,17 +175,12 @@ To run the examples follow these steps:
 
 To build the project or use the library, you will need:
 Permissions
-  <uses-permission android:name="android.permission.CAMERA" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <uses-permission android:name="android.hardware.camera.autofocus" />
+![](images/image10.png)
 Libs
-  android-support-v4.jar
-  nineoldandroids-2.4.0.jar
+  android-support-v4.jar,
+  nineoldandroids-2.4.0.jar,
   sanselan-0.97-incubator.jar
-and API version
-  minimum = 9
-  target = 19
+and API version 9 to 19
 
 ### Quick Start
 
