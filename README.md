@@ -12,7 +12,7 @@ Table of contents
 - [4. SDK architecture](#4-sdk-architecture)
 - [5. SDK integration](#5-sdk-integration)
     - [5.1 Examples app](#51-examples-app)
-    - [5.2 Integration on iOS native apps](#52-integration-on-ios-native-apps)
+    - [5.2 Integration on Android native apps](#52-integration-on-ios-native-apps)
         - [Requirements](#requirements)
         - [Quick Start](#quick-start)
         - [Adding the SDK to your app](#adding-the-sdk-to-your-app)
