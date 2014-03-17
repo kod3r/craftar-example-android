@@ -12,7 +12,7 @@ Table of contents
 - [4. SDK architecture](#4-sdk-architecture)
 - [5. SDK integration](#5-sdk-integration)
     - [5.1 Examples app](#51-examples-app)
-    - [5.2 Integration on Android native apps](#52-integration-on-Android-native-apps)
+    - [5.2 Integration on Android native apps](#52-integration-on-android-native-apps)
         - [Requirements](#requirements)
         - [Quick Start](#quick-start)
         - [Adding the SDK to your app](#adding-the-sdk-to-your-app)
@@ -105,7 +105,7 @@ developer to choose which parts to use for their application.
 The following figure depicts the architecture of the SDK with the
 different modules involved.
 
-![](images/image00.png)
+![](images/image13.png)
 
 [](#)[](#)
 
@@ -165,7 +165,8 @@ To run the examples follow these steps:
 1.  Import project in your workspace.
 2.  Select an API 9 to 18  (Notice that the project will not
     compile for the simulator).
-3.  Hit the run button.
+3.  uncompress the zip android-sdk-libs into Libs
+4.  Hit the run button.
 
 
 5.2 Integration on Android native apps
@@ -173,47 +174,36 @@ To run the examples follow these steps:
 
 ### Requirements
 
-To build the project or use the library, you will need:
-Permissions
+To build the project or use the library, you will need: zip android-sdk-libs
+API version 9 to 19 and permissions.
 ![](images/image10.png)
-
-libs
-  android-support-v4.jar,
-  nineoldandroids-2.4.0.jar,
-  sanselan-0.97-incubator.jar
-and API version 9 to 19
 
 ### Quick Start
 
 The easiest way to get started with the Catchoom SDK is by using the
-example application. The example app includes a compiled version of the
-AFNetworking framework (used to connect to the Cloud Recognition API)
-and all dependencies are already added to the project.
-
-### Adding the SDK to your app
-
-The Android Catchoom SDK is distributed as a .framework that you can
-directly drag into your project. It has some dependencies on
-frameworks/libraries that have to be linked and some compilation
-settings to be set. To proceed with the integration follow the steps
-below.
+example application. The example app includes a references images for recognition.
 
 ### Creating your first app
 
 Once you have set up your project, it’s time to add code to start using
-the Catchoom SDK. uncompress the zip and add the lib folder in your project. There are five steps to do so:
+the Catchoom SDK. There are six steps to do so:
 
-1.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
+1.  uncompress the zip into the libs folder in your project.
 
-2.  initialize the SDK.
+2.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
+
+3.  initialize the SDK.
     ![](images/image11.png)
 
-3.  Set a camera view for the camera capture, you need to provide a
+4.  Set a camera view for the camera capture, you need to provide a
     CatchoomCameraView.
     ![](images/image02.png)
     ![](images/image03.png)
 
-4.  Start using the CloudRecognition class:
+    **Note:** this step needs the preview to be initialized. Otherwise, the sdk
+    will return null.
+
+5.  Start using the CloudRecognition class:
 
     a. Use the CatchoomCloudRecognition to receive search
     responses: ![](images/image04.png)
@@ -227,12 +217,9 @@ the Catchoom SDK. uncompress the zip and add the lib folder in your project. The
     d. Implement the results callback to receive tracking data and
     contents: ![](images/image06.png)
 
-5.  Start the augmented reality experience:
+6.  Start the augmented reality experience:
 
     a. Get the tracking interface: ![](images/image12.png)
-    
-    **Note:** this step needs the preview to be initialized. Otherwise, the sdk
-    will return nil.
     
     b. Obtain the AR items and add them to the tracking
     module: ![](images/image07.png)
