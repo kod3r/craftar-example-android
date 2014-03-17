@@ -82,22 +82,32 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1" >
-
-                <ImageView
+                
+                <LinearLayout 
                     android:id="@+id/howto_link_ar_programmatically"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/launchers_about" />
+                    android:layout_width="45dp"
+                    android:layout_height="45dp">
 
-                <ImageView
-                    android:id="@+id/play_ar_programmatically"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/launchers_play" />
+                	<ImageView
+                  		android:layout_width="wrap_content"
+                   		android:layout_height="wrap_content"
+                  	  	android:layout_margin="5dp"
+                    	android:layout_weight="1"
+                    	android:src="@drawable/launchers_about" />
+				</LinearLayout>
+				
+				<LinearLayout
+				    android:id="@+id/play_ar_programmatically"
+				    android:layout_width="45dp"
+                    android:layout_height="45dp">
+				
+                	<ImageView
+                    	android:layout_width="wrap_content"
+                    	android:layout_height="wrap_content"
+                    	android:layout_margin="5dp"
+                   		android:layout_weight="1"
+               		    android:src="@drawable/launchers_play" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -153,22 +163,31 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/howto_link_ar_from_craftar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/launchers_about" />
-
-                <ImageView
-                    android:id="@+id/play_ar_from_craftar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/launchers_play" />
+				
+                <LinearLayout
+					android:id="@+id/howto_link_ar_from_craftar"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp">
+            	   
+                    <ImageView
+             	       android:layout_width="wrap_content"
+                	    android:layout_height="wrap_content"
+                	    android:layout_margin="5dp"
+                	    android:layout_weight="1"
+                	    android:src="@drawable/launchers_about" />
+				</LinearLayout>
+				<LinearLayout 
+				    android:id="@+id/play_ar_from_craftar"
+				   	android:layout_width="45dp"
+                    android:layout_height="45dp">
+                	
+                	<ImageView
+                    	android:layout_width="wrap_content"
+                    	android:layout_height="wrap_content"
+                    	android:layout_margin="5dp"
+                   		android:layout_weight="1"
+                 	   	android:src="@drawable/launchers_play" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout
@@ -224,22 +243,31 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1" >
-
+                
+                <LinearLayout
+                      android:id="@+id/howto_link_recognition_only"
+                      android:layout_width="45dp"
+                	  android:layout_height="45dp">
+               	 	<ImageView
+                	    android:layout_width="wrap_content"
+                	    android:layout_height="wrap_content"
+                	    android:layout_margin="5dp"
+                	    android:layout_weight="1"
+                	    android:src="@drawable/launchers_about" />
+				</LinearLayout>
+				
+                <LinearLayout
+                      android:id="@+id/play_recognition_only"
+                      android:layout_width="45dp"
+                	  android:layout_height="45dp">
+               	
                 <ImageView
-                    android:id="@+id/howto_link_recognition_only"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/launchers_about" />
-
-                <ImageView
-                    android:id="@+id/play_recognition_only"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:src="@drawable/launchers_play" />
+                </LinearLayout>
             </LinearLayout>
 
             <RelativeLayout

@@ -9,20 +9,21 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LaunchersActivity extends Activity implements OnClickListener {
 
 	// Howto links
 	private TextView mHowToLink;
-	private ImageView mAboutArProgrammatically;
-	private ImageView mAboutArFromCraftAR;
-	private ImageView mAboutRecognitionOnly;
+	private LinearLayout mAboutArProgrammatically;
+	private LinearLayout mAboutArFromCraftAR;
+	private LinearLayout mAboutRecognitionOnly;
 	
 	// Launch example links
-	private ImageView mArProgrammatically;
-	private ImageView mArFromCraftAR;
-	private ImageView mRecognitionOnly;
+	private LinearLayout mArProgrammatically;
+	private LinearLayout mArFromCraftAR;
+	private LinearLayout mRecognitionOnly;
 	
 	// Bottom links
 	private ImageButton mButtonCatchoom;
@@ -39,24 +40,24 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 		mHowToLink = (TextView)findViewById(R.id.howto_link);
 		mHowToLink.setClickable(true);
 		mHowToLink.setOnClickListener(this);
-		mAboutArProgrammatically = (ImageView)findViewById(R.id.howto_link_ar_programmatically);
+		mAboutArProgrammatically = (LinearLayout)findViewById(R.id.howto_link_ar_programmatically);
 		mAboutArProgrammatically.setClickable(true);
 		mAboutArProgrammatically.setOnClickListener(this);
-		mAboutArFromCraftAR = (ImageView)findViewById(R.id.howto_link_ar_from_craftar);
+		mAboutArFromCraftAR = (LinearLayout)findViewById(R.id.howto_link_ar_from_craftar);
 		mAboutArFromCraftAR.setClickable(true);
 		mAboutArFromCraftAR.setOnClickListener(this);
-		mAboutRecognitionOnly = (ImageView)findViewById(R.id.howto_link_recognition_only);
+		mAboutRecognitionOnly = (LinearLayout)findViewById(R.id.howto_link_recognition_only);
 		mAboutRecognitionOnly.setClickable(true);
 		mAboutRecognitionOnly.setOnClickListener(this);
 
 		// Setup example links
-		mArProgrammatically = (ImageView)findViewById(R.id.play_ar_programmatically);
+		mArProgrammatically = (LinearLayout)findViewById(R.id.play_ar_programmatically);
 		mArProgrammatically.setClickable(true);
 		mArProgrammatically.setOnClickListener(this);
-		mArFromCraftAR = (ImageView)findViewById(R.id.play_ar_from_craftar);
+		mArFromCraftAR = (LinearLayout)findViewById(R.id.play_ar_from_craftar);
 		mArFromCraftAR.setClickable(true);
 		mArFromCraftAR.setOnClickListener(this);
-		mRecognitionOnly = (ImageView)findViewById(R.id.play_recognition_only);
+		mRecognitionOnly = (LinearLayout)findViewById(R.id.play_recognition_only);
 		mRecognitionOnly.setClickable(true);
 		mRecognitionOnly.setOnClickListener(this);
 		
