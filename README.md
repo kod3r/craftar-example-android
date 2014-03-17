@@ -283,7 +283,9 @@ of the CRSConnect.
 
 Yes, you can do it through the CatchoomCloudRecognition interface:
 
-```catchoomCloud.setFinderFramerate(rate);```
+```java 
+catchoomCloud.setFinderFramerate(rate);
+```
 
 with a float number in the range 0 \< n \<= 2.0.
 
