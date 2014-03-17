@@ -141,22 +141,22 @@ different modules involved.
 Steps for integrating your mobile app with Catchoom and create cool AR
 experiences with the Catchoom SDK:
 
-1.  Create an account at the Catchoom AR Service beta.
-2.  Download the Catchoom SDK for Android.
-3.  Follow the Quick start guide for Android to integrate the SDK with your
+1.  Create an account at the [Catchoom Service](http://catchoom.com/).
+2.  Download the [Catchoom SDK](http://catchoom.com/product/mobile-sdk/) for Android.
+3.  Follow the [Quick Start](#quick-start) section to integrate the SDK with your
     app.
 4.  Create a collection and add some AR items with content.
 
 Also you can test our example app and see how we integrated the SDK.
-Note that the CatchoomSDK.framework takes over 127 MB of disk space, but
+Note that the CatchoomSDK takes about 50 MB of disk space, but
 in your app this will only add around 2MB.
 
 5.1 Examples app
 ----------------
 
-The SDK distribution comes with an Eclipse project of an application with
-examples on how to use the SDK. These examples show how to start a
-camera preview, start the CRS search in Finder Mode and when some result
+Apart from the SDK distribution, we provide an open-source [project](https://github.com/Catchoom/catchoom-example-android) 
+of an application with examples on how to use the SDK. These examples show how to start a
+camera preview, start the Cloud Recognition search in Finder Mode and when some result
 is found, start tracking with contents created locally and parsed from
 the scene description.
 
@@ -164,9 +164,10 @@ To run the examples follow these steps:
 
 1.  Import project in your workspace.
 2.  Select an API 9 to 18  (Notice that the project will not
-    compile for the simulator).
-3.  uncompress the zip android-sdk-libs into Libs
-4.  Hit the run button.
+    work on the simulator beecause it needs the camera).
+3.  Uncompress the CatchoomSDK zip you [downloaded](http://catchoom.com/product/mobile-sdk/)
+    and copy the libs folder into the root of the project.
+4.  Compile and run the project in your device.
 
 
 5.2 Integration on Android native apps
