@@ -193,7 +193,7 @@ the Catchoom SDK. There are six steps to do so:
 
 2. Set the API version to 9 to 19 in your manifest and the following permissions: ![](images/image10.png)
 
-2.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
+2.  Make your activity extend from CatchoomActivity instead of android Activity, and implement the CatchoomResponseHandler interface.
 
 3.  initialize the SDK.
     ![](images/image11.png)
