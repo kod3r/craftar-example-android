@@ -15,7 +15,6 @@ Table of contents
     - [5.2 Integration on Android native apps](#52-integration-on-android-native-apps)
         - [Requirements](#requirements)
         - [Quick Start](#quick-start)
-        - [Adding the SDK to your app](#adding-the-sdk-to-your-app)
         - [Creating your first app](#creating-your-first-app)
 - [6. SDK Documentation](#6-sdk-documentation)
 - [7. Frequently Asked Questions](#7-frequently-asked-questions)
