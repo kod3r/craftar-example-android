@@ -191,7 +191,14 @@ the Catchoom SDK. Follow the steps below:
 
 * Uncompress Catchoom SDK zip and copy the libs folder into your project's root directory.
 
-* Set the API version to 9 to 19 in your manifest and the following permissions: ![](images/image10.png)
+* Set the API version to 9 to 19 in your manifest and the following permissions:
+
+```xml
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+```
 
 *  Set a camera view for the camera capture, you need to provide a
     CatchoomCameraView:
