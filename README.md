@@ -175,9 +175,9 @@ To run the examples follow these steps:
 
 ### Requirements
 
-To build the project or use the library, you will need: zip android-sdk-libs
-API version 9 to 19 and permissions.
-![](images/image10.png)
+To build the project or use the library, you will need the latest version of the [Android SDK](http://developer.android.com/sdk)
+
+ 
 
 ### Quick Start
 
@@ -189,7 +189,9 @@ example application. The example app includes a references images for recognitio
 Once you have set up your project, it’s time to add code to start using
 the Catchoom SDK. There are six steps to do so:
 
-1.  uncompress the zip into the libs folder in your project.
+1.  Uncompress Catchoom SDK zip and copy the libs folder into your project's root directory.
+
+2. Set the API version to 9 to 19 in your manifest and the following permissions: ![](images/image10.png)
 
 2.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
 
