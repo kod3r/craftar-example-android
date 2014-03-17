@@ -300,7 +300,8 @@
                         android:id="@+id/text_about"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="left"
+                        android:layout_marginLeft="15dp"
                         android:text="@string/launchers_about"
                         android:textColor="@color/red_catchoom" />
 
