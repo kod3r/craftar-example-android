@@ -240,7 +240,7 @@ the Catchoom SDK. Follow the steps below:
 	}
 ```
 
-*.  Start the augmented reality experience:
+*  Start the augmented reality experience:
 
     a. Get the tracking interface in the ```onPostCreate()``` method:
     
