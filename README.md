@@ -187,47 +187,76 @@ example application. The example app includes a references images for recognitio
 ### Creating your first app
 
 Once you have set up your project, it’s time to add code to start using
-the Catchoom SDK. There are six steps to do so:
+the Catchoom SDK. Follow the steps below:
 
-1.  Uncompress Catchoom SDK zip and copy the libs folder into your project's root directory.
+* Uncompress Catchoom SDK zip and copy the libs folder into your project's root directory.
 
-2. Set the API version to 9 to 19 in your manifest and the following permissions: ![](images/image10.png)
+* Set the API version to 9 to 19 in your manifest and the following permissions: ![](images/image10.png)
 
-2.  Make your activity extend from CatchoomActivity instead of android Activity, and implement the CatchoomResponseHandler interface.
+*  Set a camera view for the camera capture, you need to provide a
+    CatchoomCameraView:
 
-3.  initialize the SDK.
-    ![](images/image11.png)
+```xml
+        <com.catchoom.CatchoomCameraView
+            android:id="@+id/camera_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
+```
 
-4.  Set a camera view for the camera capture, you need to provide a
-    CatchoomCameraView.
-    ![](images/image02.png)
-    ![](images/image03.png)
+*  Make your activity extend from CatchoomActivity instead of android Activity. And initialize the SDK in the ```onPostCreate()``` method of the CatchoomActivity, the ```onCreate()``` method can be used to get the Bundle sent to the Activity but you should not call ```setContentView()``` in the ```onCreate()```:
 
-    **Note:** this step needs the preview to be initialized. Otherwise, the sdk
-    will return null.
+```java
+	@Override
+	public void onPostCreate() {
+		
+		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_main, null);
+		CatchoomCameraView cameraView = (CatchoomCameraView) mainLayout.findViewById(R.id.camera_preview);
+		super.setCameraView(cameraView);
+		setContentView(mainLayout);
+		
+		//Initialize the SDK.
+		CatchoomSDK.init(getApplicationContext(),this);
+```
 
-5.  Start using the CloudRecognition class:
+* Start using the CloudRecognition class to search for objects in the video capture using the Finder Mode:
 
-    a. Use the CatchoomCloudRecognition to receive search
-    responses: ![](images/image04.png)
+```java
+    mCloudRecognition= CatchoomSDK.getCloudRecognition();
+	mCloudRecognition.setResponseHandler(this);
+		
+	// Set your collection token	
+    mCloudRecognition.connect(COLLECTION_TOKEN);
+
+	//Start finder mode
+	mCloudRecognition.startFinding(); 
+```
+
+* Implement the CatchoomResponseHandler interface to get the search results:
+
+```java
+	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
+	    ...
+	}
+```
+
+*.  Start the augmented reality experience:
+
+    a. Get the tracking interface in the ```onPostCreate()``` method:
     
-    b.  Set up your token for the Cloud Recognition
-    Service:![](images/image01.png)
+```java
+		mCatchoomTracking = CatchoomSDK.getTracking();
+```
     
-    c. Start searching for objects to recognize from the camera
-    capture ![](images/image05.png)
-    
-    d. Implement the results callback to receive tracking data and
-    contents: ![](images/image06.png)
+    b. Obtain the AR items in the ```searchCompleted()``` callback and add them to the tracking
+    module to start the AR experience:
 
-6.  Start the augmented reality experience:
-
-    a. Get the tracking interface: ![](images/image12.png)
-    
-    b. Obtain the AR items and add them to the tracking
-    module: ![](images/image07.png)
-    
-    c. Start tracking: ![](images/image08.png)
+```java
+		CatchoomARItem myARItem = (CatchoomARItem)results.get(0);
+		mCatchoomTracking.addItem(myARItem);
+		
+		mCatchoomTracking.startTracking();
+```
 
 6. SDK Documentation
 ====================
