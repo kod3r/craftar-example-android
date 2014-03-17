@@ -15,7 +15,6 @@ Table of contents
     - [5.2 Integration on Android native apps](#52-integration-on-android-native-apps)
         - [Requirements](#requirements)
         - [Quick Start](#quick-start)
-        - [Adding the SDK to your app](#adding-the-sdk-to-your-app)
         - [Creating your first app](#creating-your-first-app)
 - [6. SDK Documentation](#6-sdk-documentation)
 - [7. Frequently Asked Questions](#7-frequently-asked-questions)
@@ -141,22 +140,22 @@ different modules involved.
 Steps for integrating your mobile app with Catchoom and create cool AR
 experiences with the Catchoom SDK:
 
-1.  Create an account at the Catchoom AR Service beta.
-2.  Download the Catchoom SDK for Android.
-3.  Follow the Quick start guide for Android to integrate the SDK with your
+1.  Create an account at the [Catchoom Service](http://catchoom.com/).
+2.  Download the [Catchoom SDK](http://catchoom.com/product/mobile-sdk/) for Android.
+3.  Follow the [Quick Start](#quick-start) section to integrate the SDK with your
     app.
 4.  Create a collection and add some AR items with content.
 
 Also you can test our example app and see how we integrated the SDK.
-Note that the CatchoomSDK.framework takes over 127 MB of disk space, but
+Note that the CatchoomSDK takes about 50 MB of disk space, but
 in your app this will only add around 2MB.
 
 5.1 Examples app
 ----------------
 
-The SDK distribution comes with an Eclipse project of an application with
-examples on how to use the SDK. These examples show how to start a
-camera preview, start the CRS search in Finder Mode and when some result
+Apart from the SDK distribution, we provide an open-source [project](https://github.com/Catchoom/catchoom-example-android) 
+of an application with examples on how to use the SDK. These examples show how to start a
+camera preview, start the Cloud Recognition search in Finder Mode and when some result
 is found, start tracking with contents created locally and parsed from
 the scene description.
 
@@ -164,9 +163,10 @@ To run the examples follow these steps:
 
 1.  Import project in your workspace.
 2.  Select an API 9 to 18  (Notice that the project will not
-    compile for the simulator).
-3.  uncompress the zip android-sdk-libs into Libs
-4.  Hit the run button.
+    work on the simulator beecause it needs the camera).
+3.  Uncompress the CatchoomSDK zip you [downloaded](http://catchoom.com/product/mobile-sdk/)
+    and copy the libs folder into the root of the project.
+4.  Compile and run the project in your device.
 
 
 5.2 Integration on Android native apps
@@ -174,9 +174,9 @@ To run the examples follow these steps:
 
 ### Requirements
 
-To build the project or use the library, you will need: zip android-sdk-libs
-API version 9 to 19 and permissions.
-![](images/image10.png)
+To build the project or use the library, you will need the latest version of the [Android SDK](http://developer.android.com/sdk)
+
+ 
 
 ### Quick Start
 
@@ -186,45 +186,83 @@ example application. The example app includes a references images for recognitio
 ### Creating your first app
 
 Once you have set up your project, it’s time to add code to start using
-the Catchoom SDK. There are six steps to do so:
+the Catchoom SDK. Follow the steps below:
 
-1.  uncompress the zip into the libs folder in your project.
+* Uncompress Catchoom SDK zip and copy the libs folder into your project's root directory.
 
-2.  Start by making your activity extend from CatchoomActivity instead of android Activity, and implementing the CatchoomResponseHandler interface:
+* Set the API version to 9 to 19 in your manifest and the following permissions:
 
-3.  initialize the SDK.
-    ![](images/image11.png)
+```xml
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.hardware.camera.autofocus" />
+```
 
-4.  Set a camera view for the camera capture, you need to provide a
-    CatchoomCameraView.
-    ![](images/image02.png)
-    ![](images/image03.png)
+*  Set a camera view for the camera capture, you need to provide a
+    CatchoomCameraView:
 
-    **Note:** this step needs the preview to be initialized. Otherwise, the sdk
-    will return null.
+```xml
+        <com.catchoom.CatchoomCameraView
+            android:id="@+id/camera_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
+```
 
-5.  Start using the CloudRecognition class:
+*  Make your activity extend from CatchoomActivity instead of android Activity. And initialize the SDK in the ```onPostCreate()``` method of the CatchoomActivity, the ```onCreate()``` method can be used to get the Bundle sent to the Activity but you should not call ```setContentView()``` in the ```onCreate()```:
 
-    a. Use the CatchoomCloudRecognition to receive search
-    responses: ![](images/image04.png)
+```java
+	@Override
+	public void onPostCreate() {
+		
+		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_main, null);
+		CatchoomCameraView cameraView = (CatchoomCameraView) mainLayout.findViewById(R.id.camera_preview);
+		super.setCameraView(cameraView);
+		setContentView(mainLayout);
+		
+		//Initialize the SDK.
+		CatchoomSDK.init(getApplicationContext(),this);
+```
+
+* Start using the CloudRecognition class to search for objects in the video capture using the Finder Mode:
+
+```java
+    mCloudRecognition= CatchoomSDK.getCloudRecognition();
+	mCloudRecognition.setResponseHandler(this);
+		
+	// Set your collection token	
+    mCloudRecognition.connect(COLLECTION_TOKEN);
+
+	//Start finder mode
+	mCloudRecognition.startFinding(); 
+```
+
+* Implement the CatchoomResponseHandler interface to get the search results:
+
+```java
+	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
+	    ...
+	}
+```
+
+*  Start the augmented reality experience:
+
+    a. Get the tracking interface in the ```onPostCreate()``` method:
     
-    b.  Set up your token for the Cloud Recognition
-    Service:![](images/image01.png)
+```java
+		mCatchoomTracking = CatchoomSDK.getTracking();
+```
     
-    c. Start searching for objects to recognize from the camera
-    capture ![](images/image05.png)
-    
-    d. Implement the results callback to receive tracking data and
-    contents: ![](images/image06.png)
+    b. Obtain the AR items in the ```searchCompleted()``` callback and add them to the tracking
+    module to start the AR experience:
 
-6.  Start the augmented reality experience:
-
-    a. Get the tracking interface: ![](images/image12.png)
-    
-    b. Obtain the AR items and add them to the tracking
-    module: ![](images/image07.png)
-    
-    c. Start tracking: ![](images/image08.png)
+```java
+		CatchoomARItem myARItem = (CatchoomARItem)results.get(0);
+		mCatchoomTracking.addItem(myARItem);
+		
+		mCatchoomTracking.startTracking();
+```
 
 6. SDK Documentation
 ====================
@@ -245,7 +283,9 @@ of the CRSConnect.
 
 Yes, you can do it through the CatchoomCloudRecognition interface:
 
-```catchoomCloud.setFinderFramerate(rate);```
+```java 
+catchoomCloud.setFinderFramerate(rate);
+```
 
 with a float number in the range 0 \< n \<= 2.0.
 
