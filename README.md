@@ -228,11 +228,11 @@ the Catchoom SDK. Follow the steps below:
 * Start using the CloudRecognition class to search for objects in the video capture using the Finder Mode:
 
 ```java
-    mCloudRecognition= CatchoomSDK.getCloudRecognition();
+    CatchoomCloudRecognition mCloudRecognition= CatchoomSDK.getCloudRecognition();
 	mCloudRecognition.setResponseHandler(this);
 		
 	// Set your collection token	
-    mCloudRecognition.connect(COLLECTION_TOKEN);
+    mCloudRecognition.setCollectionToken(COLLECTION_TOKEN);
 
 	//Start finder mode
 	mCloudRecognition.startFinding(); 
@@ -251,7 +251,7 @@ the Catchoom SDK. Follow the steps below:
     a. Get the tracking interface in the ```onPostCreate()``` method:
     
 ```java
-		mCatchoomTracking = CatchoomSDK.getTracking();
+		CatchoomTracking mCatchoomTracking = CatchoomSDK.getTracking();
 ```
     
     b. Obtain the AR items in the ```searchCompleted()``` callback and add them to the tracking
