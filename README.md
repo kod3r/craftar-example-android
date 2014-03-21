@@ -222,7 +222,7 @@ the Catchoom SDK. Follow the steps below:
 	}
 ```
 
-*  Make your activity extend from CatchoomActivity instead of android Activity. And initialize the SDK in the ```onPostCreate()``` method of the CatchoomActivity, the ```onCreate()``` method can be used to get the Bundle sent to the Activity but you should not call ```setContentView()``` in the ```onCreate()```:
+*  Make your activity extend from CatchoomActivity instead of android Activity. And initialize the SDK in the ```onPostCreate()``` method of the CatchoomActivity, the ```onCreate()``` method can be used to get the Bundle sent to the Activity but you should not call ```setContentView()``` in the ```onCreate()```. Prepare the CloudRecognition and Tracking class to search for objects in the video capture using the Finder Mode:
 
 ```java
 	@Override
@@ -235,18 +235,8 @@ the Catchoom SDK. Follow the steps below:
 		
 		//Initialize the SDK.
 		CatchoomSDK.init(getApplicationContext(),this);
-	}
-```
-
-* Prepare the CloudRecognition and Tracking class to search for objects in the video capture using the Finder Mode:
-
-```java
-	@Override
-	public void onPostCreate() {
-    		
-    		{...}
-    		
-    		CatchoomCloudRecognition mCloudRecognition= CatchoomSDK.getCloudRecognition();
+				
+		CatchoomCloudRecognition mCloudRecognition= CatchoomSDK.getCloudRecognition();
 		mCloudRecognition.setResponseHandler(this);
 		
 		// Set your collection token	
@@ -254,13 +244,13 @@ the Catchoom SDK. Follow the steps below:
     
 		CatchoomTracking mCatchoomTracking = CatchoomSDK.getTracking();
 	}
-	
 ```
- **Note:** If you using the SingleShot mode you must get the CatchoomCamera class also ```mCatchoomCamera = CatchoomSDK.getCamera();```, and instead of ```java  mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); ``` you have to use ```java mCloudRecognition.connect(COLLECTION_TOKEN);```
+
+ **Note:** If you using the SingleShot mode you must implements CatchoomImageHandler interface and get the CatchoomCamera class also ```mCatchoomCamera = CatchoomSDK.getCamera();```, and instead of ```java  mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); ``` you have to use ```java mCloudRecognition.connect(COLLECTION_TOKEN);```
 
 #### Using startFinderMode
 
-* start finding  interface in the ```onPostCreate()``` method:
+* start finding interface in the ```onPostCreate()``` method:
     
 ```java
 	@Override
@@ -278,12 +268,30 @@ the Catchoom SDK. Follow the steps below:
 ```java
 	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
 	
+		boolean haveContent = false;
 		mCloudRecognition.stopFinding();
 		
-		CatchoomARItem myARItem = (CatchoomARItem)results.get(0);
-		mCatchoomTracking.addItem(myARItem);
-		
-		mCatchoomTracking.startTracking();
+		// Look for trackable results
+		for (CatchoomCloudRecognitionItem item : results) {
+			
+			// Setup the AR experience with content provided in the response
+			if (item.isAR()) {
+				CatchoomARItem itemAR = (CatchoomARItem) item;
+				
+				// If the item has contents, add them to the AR experience
+				if (itemAR.getContents().size() > 0) {
+					mCatchoomTracking.addItem(itemAR);
+					haveContent=true;
+				}
+			}
+		}
+		if (haveContent) {
+			// Start the AR experience
+			mCatchoomTracking.startTracking();
+		} else {
+	        // Re-start the search (until there is a match and AR contents available)
+			mCloudRecognition.startFinding();
+		}
 	}
 ```
 
@@ -292,6 +300,47 @@ the Catchoom SDK. Follow the steps below:
 * Start searching when you call ```takePicture()```:
     
 ```java
+	// Callback of the takePicture() function when a picture could be taken.
+	@Override
+	public void requestImageReceived(CatchoomImage image) {
+
+		catchoomCloud.searchWithImage(COLLECTION_TOKEN, image);
+
+	}
+```	
+* And then the implementation of searchCompleted should parse the results.
+
+
+```java
+	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
+	
+		boolean haveContent = false;
+		
+		// Look for trackable results
+		for (CatchoomCloudRecognitionItem item : results) {
+			
+			// Setup the AR experience with content provided in the response
+			if (item.isAR()) {
+				CatchoomARItem itemAR = (CatchoomARItem) item;
+				
+				// If the item has contents, add them to the AR experience
+				if (itemAR.getContents().size() > 0) {
+					mCatchoomTracking.addItem(itemAR);
+					haveContent=true;
+				}
+			}
+		}
+		// Unfreeze the VideoCapture that the singleShotSearch freezes.
+    		// This unfreeze step is optional if haveContent==false, but mandatory to run [_tracking startTracking];
+		mCatchoomCamera.restartCameraPreview();
+
+		if (haveContent) {
+			// Start the AR experience
+			mCatchoomTracking.startTracking();
+		} else {
+			// Show a message that no matches were found for this query.
+		}
+	}
 ```
 
 6. SDK Documentation
