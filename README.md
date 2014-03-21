@@ -246,7 +246,7 @@ the Catchoom SDK. Follow the steps below:
 	}
 ```
 
- **Note:** If you using the SingleShot mode you must implements CatchoomImageHandler interface and get the CatchoomCamera class also ```mCatchoomCamera = CatchoomSDK.getCamera();```, and instead of ```java  mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); ``` you have to use ```java mCloudRecognition.connect(COLLECTION_TOKEN);```
+ **Note:** If you using the SingleShot mode you must implements CatchoomImageHandler interface and get the CatchoomCamera class also ```mCatchoomCamera = CatchoomSDK.getCamera();```, and instead of ```  mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); ``` you have to use ``` mCloudRecognition.connect(COLLECTION_TOKEN);```
 
 #### Using startFinderMode
 
