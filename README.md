@@ -331,7 +331,7 @@ the Catchoom SDK. Follow the steps below:
 			}
 		}
 		// Unfreeze the VideoCapture that the singleShotSearch freezes.
-    		// This unfreeze step is optional if haveContent==false, but mandatory to run [_tracking startTracking];
+    		// This unfreeze step is optional if haveContent==false.
 		mCatchoomCamera.restartCameraPreview();
 
 		if (haveContent) {
