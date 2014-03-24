@@ -3,7 +3,7 @@
 ### Introduction
 
 Catchoom allows to create recognition only and Augmented Reality (AR)
-experiences using the Catchoom CraftAR Service and its Mobile SDK (â€˜Mobile SDKâ€™).
+experiences using the Catchoom CraftAR Service and its Mobile SDK ('Mobile SDK').
 
 With Catchoom, you can create amazing apps that provide digital content
 for real-life objects like printed media, packaging among others. You
