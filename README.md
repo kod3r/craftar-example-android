@@ -222,7 +222,7 @@ the Catchoom SDK. Follow the steps below:
 	}
 ```
 
-*  Make your activity extend from CatchoomActivity instead of android Activity. And initialize the SDK in the ```onPostCreate()``` method of the CatchoomActivity, the ```onCreate()``` method can be used to get the Bundle sent to the Activity but you should not call ```setContentView()``` in the ```onCreate()```. Prepare the CloudRecognition and Tracking class to search for objects in the video capture using the Finder Mode:
+*  Make your activity extend from CatchoomActivity and implement the ```onPostCreate()``` method to set your content view and prepare the CatchoomCloudRecognition and CatchoomTracking objects. The SDK will not be ready until ```onPostCreate()``` is called so call ```setContentView()``` there instead of doing it in the ```onCreate()``` method. It is still safe to use the ```onCreate()``` to get the Bundle object, but don't forget to call ```super```.
 
 ```java
 	@Override
@@ -240,9 +240,6 @@ the Catchoom SDK. Follow the steps below:
 		CatchoomCloudRecognition mCloudRecognition= CatchoomSDK.getCloudRecognition();
 		//Tell the cloud-recognition module the handler that will receive the responses from the cloud.
 		mCloudRecognition.setResponseHandler(this);
-		
-		// Set your collection token	
-		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN);
     
 		//Obtain the tracking module. It will be used to show the AR experiences.
 		CatchoomTracking mCatchoomTracking = CatchoomSDK.getTracking();
@@ -253,7 +250,7 @@ the Catchoom SDK. Follow the steps below:
 
 #### Using FinderMode
 
-* Call startFinding() in the cloud recognition module whenever you want to start searching. For example, if you want to start searching when the activity starts, do it in the ```onPostCreate()``` method:
+* Call startFinding() in the cloud recognition module whenever you want to start searching. For example, if you want to start searching when the activity starts, do it at the end of the ```onPostCreate()``` method:
     
 ```java
 	@Override
@@ -261,6 +258,9 @@ the Catchoom SDK. Follow the steps below:
 		
 		{...}
 		
+		// Set your collection token	
+		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN);
+
 		//Start finder mode
 		mCloudRecognition.startFinding(); 
 	}
