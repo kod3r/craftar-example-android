@@ -169,7 +169,7 @@ To run the examples follow these steps:
 4.  Compile and run the project in your device.
 
 
-5.2 Integration on Android native apps
+5.2 Integration on Android apps
 --------------------------------------
 
 ### Requirements
@@ -235,22 +235,25 @@ the Catchoom SDK. Follow the steps below:
 		
 		//Initialize the SDK.
 		CatchoomSDK.init(getApplicationContext(),this);
-				
+		
+		//Obtain the cloud recognition module.
 		CatchoomCloudRecognition mCloudRecognition= CatchoomSDK.getCloudRecognition();
+		//Tell the cloud-recognition module the handler that will receive the responses from the cloud.
 		mCloudRecognition.setResponseHandler(this);
 		
 		// Set your collection token	
 		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN);
     
+		//Obtain the tracking module. It will be used to show the AR experiences.
 		CatchoomTracking mCatchoomTracking = CatchoomSDK.getTracking();
 	}
 ```
 
- **Note:** If you using the SingleShot mode you must implements CatchoomImageHandler interface and get the CatchoomCamera class also ```mCatchoomCamera = CatchoomSDK.getCamera();```, and instead of ```  mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); ``` you have to use ``` mCloudRecognition.connect(COLLECTION_TOKEN);```
+ **Note:** If you are using the SingleShot mode you must implement CatchoomImageHandler interface and get the CatchoomCamera module ``` CatchoomCamera mCatchoomCamera = CatchoomSDK.getCamera();```. 
 
-#### Using startFinderMode
+#### Using FinderMode
 
-* start finding interface in the ```onPostCreate()``` method:
+* Call startFinding() in the cloud recognition module whenever you want to start searching. For example, if you want to start searching when the activity starts, do it in the ```onPostCreate()``` method:
     
 ```java
 	@Override
@@ -269,8 +272,7 @@ the Catchoom SDK. Follow the steps below:
 	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
 	
 		boolean haveContent = false;
-		mCloudRecognition.stopFinding();
-		
+	
 		// Look for trackable results
 		for (CatchoomCloudRecognitionItem item : results) {
 			
@@ -286,25 +288,24 @@ the Catchoom SDK. Follow the steps below:
 			}
 		}
 		if (haveContent) {
+			// Stop finding, we just got the results.
+			mCloudRecognition.stopFinding();
 			// Start the AR experience
 			mCatchoomTracking.startTracking();
-		} else {
-	        // Re-start the search (until there is a match and AR contents available)
-			mCloudRecognition.startFinding();
 		}
 	}
 ```
 
 #### Using SingleShot mode
 
-* Start searching when you call ```takePicture()```:
+* Start searching when you call ```mCatchoomCamera.takePicture()```:
     
 ```java
-	// Callback of the takePicture() function when a picture could be taken.
+	// Callback of the takePicture() function when a picture was taken.
 	@Override
 	public void requestImageReceived(CatchoomImage image) {
 
-		catchoomCloud.searchWithImage(COLLECTION_TOKEN, image);
+		mCloudRecognition.searchWithImage(COLLECTION_TOKEN, image);
 
 	}
 ```	
@@ -338,7 +339,7 @@ the Catchoom SDK. Follow the steps below:
 			// Start the AR experience
 			mCatchoomTracking.startTracking();
 		} else {
-			// Show a message that no matches were found for this query.
+			// We found no matches with AR contents for this query.
 		}
 	}
 ```
@@ -375,7 +376,7 @@ Currently the simulator is not supported. Our libraries depend on
 devices that have built in camera and the simulator does not have one.
 
 
-#### Should/Can I call ```catchoomTracking.startTracking();``` if it has already been called once? Does it continue tracking or it stops and starts? Will the videoplayback restart or continue?
+#### Should/Can I call ```catchoomTracking.startTracking();``` if it has already been called once?
 
 The call will have no effect. If the tracking has already started, the
 SDK will continue with the tracking on.
@@ -383,7 +384,4 @@ SDK will continue with the tracking on.
 
 #### Can I run Finder Mode and tracking simultaneously?
 
-Yes, but you must manage your AR items. You must control the AR items
-and the contents you add in order not to add the same item again or load
-the content several times when an item being tracked is found by the
-Finder Mode.
+Yes, you can. The SDK takes care of not adding the same item twice.
