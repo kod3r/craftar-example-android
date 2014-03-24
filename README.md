@@ -298,19 +298,39 @@ the Catchoom SDK. Follow the steps below:
 
 #### Using SingleShot mode
 
-* Start searching when you call ```mCatchoomCamera.takePicture()```:
+Implement CatchoomImageHandler interface. 
     
 ```java
-	// Callback of the takePicture() function when a picture was taken.
 	@Override
-	public void requestImageReceived(CatchoomImage image) {
+	public void onPostCreate() {
+		
+		{...}
+		
+		// Get the Catchoom Camera
+		mCatchoomCamera = (CatchoomCamera) CatchoomSDK.getCamera();
+		
+		// Receive images from the camera when takePicture() is called
+		mCatchoomCamera.setImageHandler(this);
+	}
+```
 
-		mCloudRecognition.searchWithImage(COLLECTION_TOKEN, image);
+* Call takePicture to obtain a picture from the camera.
 
+```java
+	public void mySearchFunction() {
+		mCatchoomCamera.takePicture();
 	}
 ```	
-* And then the implementation of searchCompleted should parse the results.
 
+* Once the picture is obtained from the camera, requestImageReceived is called. It is a good time to perform a search with the obtained picture:
+    
+```java
+	public void requestImageReceived(CatchoomImage image) {
+		mCloudRecognition.searchWithImage(COLLECTION_TOKEN, image);
+	}
+```	
+
+* And then the implementation of searchCompleted should parse the results.
 
 ```java
 	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
