@@ -12,7 +12,7 @@ AR content to display upon recognition in your Catchoom-powered
 app.
 
 This document describes mainly the Examples of different uses of the Service and the SDK.
-General use of the SDK can be found in the [Documentation section of Catchoom website](http://catchoom.com/documentation/sdk/ios/). Complete SDK documentation of the
+General use of the SDK can be found in the [Documentation section of Catchoom website](http://catchoom.com/documentation/sdk/android/). Complete SDK documentation of the
 classes can be found within the SDK distribution.
 
 ### How to use the examples
