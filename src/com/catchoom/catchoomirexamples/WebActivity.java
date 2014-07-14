@@ -20,7 +20,9 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.catchoom.catchoomirexamples;
+
+import com.catchoom.catchoomirexamples.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

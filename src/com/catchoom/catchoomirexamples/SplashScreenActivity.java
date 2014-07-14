@@ -20,27 +20,37 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.catchoom.catchoomirexamples;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import com.catchoom.catchoomirexamples.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
-import android.widget.TextView;
+import android.view.Window;
 
-public class HowToActivity extends Activity {
-	
-	public static final String HOWTO_LAYOUT_EXTRA = "howto_layout";
+public class SplashScreenActivity extends Activity {
+
+	private static final long SPLASH_SCREEN_DELAY = 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		int layoutRes = getIntent().getExtras().getInt(HOWTO_LAYOUT_EXTRA);
-		setContentView(layoutRes);
-		
-		TextView linksView = (TextView)findViewById(R.id.text_with_links_1);
-		if (linksView != null) {
-			linksView.setMovementMethod(LinkMovementMethod.getInstance());
-		}
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.splash_screen);
+
+		TimerTask task = new TimerTask() {
+			public void run() {
+				Intent launchersActivity = new Intent( SplashScreenActivity.this, LaunchersActivity.class);
+				startActivity(launchersActivity);
+				finish();
+			}
+		};
+		Timer timer = new Timer();
+		timer.schedule(task, SPLASH_SCREEN_DELAY);
 	}
 
 }

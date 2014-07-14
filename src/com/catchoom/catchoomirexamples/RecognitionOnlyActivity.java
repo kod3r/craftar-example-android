@@ -20,15 +20,18 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.catchoom.catchoomirexamples;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Toast;
 
-import com.catchoom.CatchoomARItem;
 import com.catchoom.CatchoomActivity;
 import com.catchoom.CatchoomCamera;
 import com.catchoom.CatchoomCameraView;
@@ -39,19 +42,20 @@ import com.catchoom.CatchoomImage;
 import com.catchoom.CatchoomImageHandler;
 import com.catchoom.CatchoomResponseHandler;
 import com.catchoom.CatchoomSDK;
-import com.catchoom.CatchoomTracking;
+import com.catchoom.catchoomirexamples.R;
 
-public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler {
+public class RecognitionOnlyActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler, OnClickListener {
 
 	private final String TAG = "CatchoomTrackingExample";
 	private final static String COLLECTION_TOKEN="craftarexamples1";
-	
+
 	private View mScanningLayout;
+	private View mTapToScanLayout;
 	
 	CatchoomCamera mCamera;
 	
 	CatchoomCloudRecognition mCloudRecognition;
-	CatchoomTracking mCatchoomTracking;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,13 +64,15 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	@Override
 	public void onPostCreate() {
 		
-		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_ar_programmatically_ar_from_craftar, null);
+		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_recognition_only, null);
 		CatchoomCameraView cameraView = (CatchoomCameraView) mainLayout.findViewById(R.id.camera_preview);
 		super.setCameraView(cameraView);
 		setContentView(mainLayout);
 		
 		mScanningLayout = findViewById(R.id.layout_scanning);
-		
+		mTapToScanLayout = findViewById(R.id.tap_to_scan);
+		mTapToScanLayout.setClickable(true);
+		mTapToScanLayout.setOnClickListener(this);
 		
 		//Initialize the SDK. From this SDK, you will be able to retrieve the necessary modules to use the SDK (camera, tracking, and cloud-recgnition)
 		CatchoomSDK.init(getApplicationContext(),this);
@@ -75,18 +81,10 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 		mCamera= CatchoomSDK.getCamera();
 		mCamera.setImageHandler(this); //Tell the camera who will receive the image after takePicture()
 		
-		//Setup the finder-mode: Note! PRESERVE THE ORDER OF THIS CALLS
+		//Setup cloud recognition
 		mCloudRecognition= CatchoomSDK.getCloudRecognition();//Obtain the cloud recognition module
 		mCloudRecognition.setResponseHandler(this); //Tell the cloud recognition who will receive the responses from the cloud
 		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); //Tell the cloud-recognition which token to use from the finder mode
-		
-		
-		
-		//Start finder mode
-		mCloudRecognition.startFinding();
-		
-		//Obtain the tracking module
-		mCatchoomTracking = CatchoomSDK.getTracking();
 		
 		mCloudRecognition.connect(COLLECTION_TOKEN);
 		
@@ -94,24 +92,24 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	
 	@Override
 	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
+		mScanningLayout.setVisibility(View.GONE);
 		if(results.size()==0){
+			Log.d(TAG,"Nothing found");
+			Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_nothing_found), Toast.LENGTH_SHORT).show();
 		}else{
 			CatchoomCloudRecognitionItem item = results.get(0);
-			if (item.isAR()) {
-				// Stop Finding
-				mCloudRecognition.stopFinding();
-				
-				// Cast the found item to an AR item
-				CatchoomARItem myARItem = (CatchoomARItem)item;
-				
-				// Add content to the tracking SDK and start AR experience
-				mCatchoomTracking.addItem(myARItem);
-				mCatchoomTracking.startTracking();
-				
-				mScanningLayout.setVisibility(View.GONE);
+			if (!item.isAR()) {
+				Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
+				startActivity(launchBrowser);
+				mTapToScanLayout.setVisibility(View.VISIBLE);
+				mCamera.restartCameraPreview();
+				return;
+			}else{
+				Toast.makeText(getBaseContext(),"Found item:"+item.getItemName(),Toast.LENGTH_SHORT).show();
 			}
-			
 		}
+		mTapToScanLayout.setVisibility(View.VISIBLE);
+		mCamera.restartCameraPreview();
 	}
 	
 	@Override
@@ -123,6 +121,10 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	public void requestFailedResponse(int requestCode,
 			CatchoomCloudRecognitionError responseError) {
 		Log.d(TAG,"requestFailedResponse");	
+		Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_nothing_found), Toast.LENGTH_SHORT).show();
+		mScanningLayout.setVisibility(View.GONE);
+		mTapToScanLayout.setVisibility(View.VISIBLE);
+		mCamera.restartCameraPreview();
 		
 	}
 
@@ -134,6 +136,19 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	@Override
 	public void requestImageError(String error) {
 		//Take picture failed
+		Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_picture_error), Toast.LENGTH_SHORT).show();
+		mScanningLayout.setVisibility(View.GONE);
+		mTapToScanLayout.setVisibility(View.VISIBLE);
+		mCamera.restartCameraPreview();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == mTapToScanLayout) {
+			mTapToScanLayout.setVisibility(View.GONE);
+			mScanningLayout.setVisibility(View.VISIBLE);
+			mCamera.takePicture();
+		}
 	}
 
 	

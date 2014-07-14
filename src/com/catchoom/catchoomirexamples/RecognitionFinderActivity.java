@@ -20,7 +20,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.catchoom.catchoomirexamples;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.catchoom.CatchoomActivity;
@@ -42,19 +41,18 @@ import com.catchoom.CatchoomImage;
 import com.catchoom.CatchoomImageHandler;
 import com.catchoom.CatchoomResponseHandler;
 import com.catchoom.CatchoomSDK;
+import com.catchoom.catchoomirexamples.R;
 
-public class RecognitionOnlyActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler, OnClickListener {
+public class RecognitionFinderActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler {
 
 	private final String TAG = "CatchoomTrackingExample";
 	private final static String COLLECTION_TOKEN="craftarexamples1";
-
+	
 	private View mScanningLayout;
-	private View mTapToScanLayout;
 	
 	CatchoomCamera mCamera;
 	
 	CatchoomCloudRecognition mCloudRecognition;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,16 +61,12 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 	@Override
 	public void onPostCreate() {
 		
-		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_recognition_only, null);
+		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_recognition_finder, null);
 		CatchoomCameraView cameraView = (CatchoomCameraView) mainLayout.findViewById(R.id.camera_preview);
 		super.setCameraView(cameraView);
 		setContentView(mainLayout);
 		
 		mScanningLayout = findViewById(R.id.layout_scanning);
-		mTapToScanLayout = findViewById(R.id.tap_to_scan);
-		mTapToScanLayout.setClickable(true);
-		mTapToScanLayout.setOnClickListener(this);
-		
 		
 		//Initialize the SDK. From this SDK, you will be able to retrieve the necessary modules to use the SDK (camera, tracking, and cloud-recgnition)
 		CatchoomSDK.init(getApplicationContext(),this);
@@ -81,11 +75,13 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 		mCamera= CatchoomSDK.getCamera();
 		mCamera.setImageHandler(this); //Tell the camera who will receive the image after takePicture()
 		
-		//Setup cloud recognition
+		//Setup the finder-mode: Note! PRESERVE THE ORDER OF THIS CALLS
 		mCloudRecognition= CatchoomSDK.getCloudRecognition();//Obtain the cloud recognition module
 		mCloudRecognition.setResponseHandler(this); //Tell the cloud recognition who will receive the responses from the cloud
 		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); //Tell the cloud-recognition which token to use from the finder mode
 		
+		//Start finder mode
+		mCloudRecognition.startFinding();
 		
 		mCloudRecognition.connect(COLLECTION_TOKEN);
 		
@@ -95,22 +91,19 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
 		mScanningLayout.setVisibility(View.GONE);
 		if(results.size()==0){
-			Log.d(TAG,"Nothing found");
-		}else{
+		// Nothing found 
+		} else {
 			CatchoomCloudRecognitionItem item = results.get(0);
 			if (!item.isAR()) {
 				Intent launchBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl()));
 				startActivity(launchBrowser);
-				mTapToScanLayout.setVisibility(View.VISIBLE);
-				mCamera.restartCameraPreview();
 				return;
+			}else{
+				Toast.makeText(getBaseContext(),"Found item:"+item.getItemName(),Toast.LENGTH_SHORT).show();
 			}
 		}
-		Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_nothing_found), Toast.LENGTH_SHORT).show();
-		mTapToScanLayout.setVisibility(View.VISIBLE);
-		mCamera.restartCameraPreview();
-	}
-	
+		mScanningLayout.setVisibility(View.VISIBLE);
+	}	
 	@Override
 	public void connectCompleted(){
 		Log.i(TAG,"Collection token is valid");
@@ -119,12 +112,7 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 	@Override
 	public void requestFailedResponse(int requestCode,
 			CatchoomCloudRecognitionError responseError) {
-		Log.d(TAG,"requestFailedResponse");	
-		Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_nothing_found), Toast.LENGTH_SHORT).show();
-		mScanningLayout.setVisibility(View.GONE);
-		mTapToScanLayout.setVisibility(View.VISIBLE);
-		mCamera.restartCameraPreview();
-		
+		Log.d(TAG,"requestFailedResponse");		
 	}
 
 	//Callback received for SINGLE-SHOT only (after takePicture).
@@ -135,19 +123,6 @@ public class RecognitionOnlyActivity extends CatchoomActivity implements Catchoo
 	@Override
 	public void requestImageError(String error) {
 		//Take picture failed
-		Toast.makeText(getBaseContext(),getString(R.string.recognition_only_toast_picture_error), Toast.LENGTH_SHORT).show();
-		mScanningLayout.setVisibility(View.GONE);
-		mTapToScanLayout.setVisibility(View.VISIBLE);
-		mCamera.restartCameraPreview();
-	}
-
-	@Override
-	public void onClick(View v) {
-		if (v == mTapToScanLayout) {
-			mTapToScanLayout.setVisibility(View.GONE);
-			mScanningLayout.setVisibility(View.VISIBLE);
-			mCamera.takePicture();
-		}
 	}
 
 	

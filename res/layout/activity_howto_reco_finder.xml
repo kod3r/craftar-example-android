@@ -20,7 +20,7 @@
             android:gravity="center_horizontal"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="@string/howto_ar_craftar_title"
+            android:text="@string/howto_reco_title"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
             android:layout_height="75dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="centerInside"
-            android:src="@drawable/ar_from_craftar" />
+            android:src="@drawable/reco_only" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -75,83 +75,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/howto_common_workflow_1" />
+                android:text="@string/howto_reco_find_workflow_1" />
 
             <TextView
                 android:id="@+id/TextView02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/howto_common_workflow_2" />
+                android:text="@string/howto_reco_find_workflow_2" />
 
             <TextView
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/howto_common_workflow_3" />
+                android:text="@string/howto_reco_find_workflow_3" />
 
             <TextView
                 android:id="@+id/TextView08"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/howto_ar_craftar_workflow_4" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/separator" >
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/TextView07"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="@string/howto_common_about_scene"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/text_with_links_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/howto_common_about_scene_1" />
-
-            <TextView
-                android:id="@+id/TextView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/howto_ar_craftar_about_scene_2" />
-
-            <TextView
-                android:id="@+id/TextView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/howto_ar_craftar_about_scene_3" />
-
-            <TextView
-                android:id="@+id/TextView09"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/howto_common_about_scene_4" />
+                android:text="@string/howto_reco_find_workflow_4" />
         </LinearLayout>
 
         <RelativeLayout

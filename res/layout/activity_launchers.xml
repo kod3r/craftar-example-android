@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context=".ARProgrammaticallyActivity" >
+    tools:context=".RecognitionFinderActivity" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:text="@string/launchers_ar_programmatically"
+                android:text="@string/launchers_reco_finder"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/red_catchoom"
                 android:textSize="16sp" />
@@ -109,85 +109,6 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_below="@id/launchers_box1"
-            android:background="@color/separator" >
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="5dp" >
-
-        <LinearLayout
-            android:id="@+id/launchers_box2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp" >
-
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_weight="1" >
-
-                <ImageView
-                    android:id="@+id/ImageView01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/launcher_ar_from_craftar" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/TextView03"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="1"
-                android:text="@string/launchers_ar_from_craftar"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/red_catchoom"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1" >
-            
-            <LinearLayout 
-                android:id="@+id/howto_link_ar_from_craftar"
-                android:layout_width="35dp"
-                android:layout_height="35dp">
-
-            	<ImageView
-                	android:layout_width="wrap_content"
-                	android:layout_height="wrap_content"
-                	android:layout_margin="5dp"
-           	   		android:layout_weight="1"
-           	    	android:src="@drawable/launchers_about" />
-			</LinearLayout>
-            <LinearLayout 
-                android:id="@+id/play_ar_from_craftar"
-                android:layout_width="35dp"
-                android:layout_height="35dp">
-  	       		<ImageView
-    	            android:layout_width="wrap_content"
-        	        android:layout_height="wrap_content"
-            	    android:layout_margin="5dp"
-                	android:layout_weight="1"
-               		android:src="@drawable/launchers_play" />
-			</LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/launchers_box2"
             android:background="@color/separator" >
         </RelativeLayout>
     </RelativeLayout>

@@ -20,7 +20,9 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.catchoom.catchoomirexamples;
+
+import com.catchoom.catchoomirexamples.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -38,13 +40,11 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 
 	// Howto links
 	private TextView mHowToLink;
-	private LinearLayout mAboutArProgrammatically;
-	private LinearLayout mAboutArFromCraftAR;
+	private LinearLayout mAboutRecognitionFinder;
 	private LinearLayout mAboutRecognitionOnly;
 	
 	// Launch example links
-	private LinearLayout mArProgrammatically;
-	private LinearLayout mArFromCraftAR;
+	private LinearLayout mRecognitionFinder;
 	private LinearLayout mRecognitionOnly;
 	
 	// Bottom links
@@ -62,27 +62,20 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 		mHowToLink = (TextView)findViewById(R.id.howto_link);
 		mHowToLink.setClickable(true);
 		mHowToLink.setOnClickListener(this);
-		mAboutArProgrammatically = (LinearLayout)findViewById(R.id.howto_link_ar_programmatically);
-		mAboutArProgrammatically.setClickable(true);
-		mAboutArProgrammatically.setOnClickListener(this);
-		mAboutArFromCraftAR = (LinearLayout)findViewById(R.id.howto_link_ar_from_craftar);
-		mAboutArFromCraftAR.setClickable(true);
-		mAboutArFromCraftAR.setOnClickListener(this);
+		mAboutRecognitionFinder = (LinearLayout)findViewById(R.id.howto_link_ar_programmatically);
+		mAboutRecognitionFinder.setClickable(true);
+		mAboutRecognitionFinder.setOnClickListener(this);
 		mAboutRecognitionOnly = (LinearLayout)findViewById(R.id.howto_link_recognition_only);
 		mAboutRecognitionOnly.setClickable(true);
 		mAboutRecognitionOnly.setOnClickListener(this);
 
 		// Setup example links
-		mArProgrammatically = (LinearLayout)findViewById(R.id.play_ar_programmatically);
-		mArProgrammatically.setClickable(true);
-		mArProgrammatically.setOnClickListener(this);
-		mArFromCraftAR = (LinearLayout)findViewById(R.id.play_ar_from_craftar);
-		mArFromCraftAR.setClickable(true);
-		mArFromCraftAR.setOnClickListener(this);
+		mRecognitionFinder = (LinearLayout)findViewById(R.id.play_ar_programmatically);
+		mRecognitionFinder.setClickable(true);
+		mRecognitionFinder.setOnClickListener(this);
 		mRecognitionOnly = (LinearLayout)findViewById(R.id.play_recognition_only);
 		mRecognitionOnly.setClickable(true);
 		mRecognitionOnly.setOnClickListener(this);
-		
 		
 		// Setup bottom Links
 		mButtonCatchoom = (ImageButton)findViewById(R.id.imageButton_logo);
@@ -99,12 +92,9 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 		if (v == mHowToLink) {
 			launchHowto = new Intent(this, HowToActivity.class);
 			launchHowto.putExtra(HowToActivity.HOWTO_LAYOUT_EXTRA, R.layout.activity_howto);
-		} else if (v == mAboutArProgrammatically) {
+		} else if (v == mAboutRecognitionFinder) {
 			launchHowto = new Intent(this, HowToActivity.class);
-			launchHowto.putExtra(HowToActivity.HOWTO_LAYOUT_EXTRA, R.layout.activity_howto_ar_programmatically);
-		} else if (v == mAboutArFromCraftAR) {
-			launchHowto = new Intent(this, HowToActivity.class);
-			launchHowto.putExtra(HowToActivity.HOWTO_LAYOUT_EXTRA, R.layout.activity_howto_ar_from_craftar);
+			launchHowto.putExtra(HowToActivity.HOWTO_LAYOUT_EXTRA, R.layout.activity_howto_reco_finder);
 		} else if (v == mAboutRecognitionOnly) {
 			launchHowto = new Intent(this, HowToActivity.class);
 			launchHowto.putExtra(HowToActivity.HOWTO_LAYOUT_EXTRA, R.layout.activity_howto_recognition_only);
@@ -116,10 +106,8 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 		
 		// Clicked on play links
 		Intent playExampleIntent = null;
-		if (v == mArProgrammatically) {
-			playExampleIntent = new Intent(this, ARProgrammaticallyActivity.class);
-		} else if (v == mArFromCraftAR) {
-			playExampleIntent = new Intent(this, ARFromCraftARActivity.class);
+		if (v == mRecognitionFinder) {
+			playExampleIntent = new Intent(this, RecognitionFinderActivity.class);
 		} else if (v == mRecognitionOnly) {
 			playExampleIntent = new Intent(this, RecognitionOnlyActivity.class);
 		}
@@ -127,7 +115,6 @@ public class LaunchersActivity extends Activity implements OnClickListener {
 			startActivity(playExampleIntent);
 			return;
 		}
-		
 		
 		// Clicked on bottom links
 		if (v == mButtonCatchoom || v == mButtonSignUp) {
