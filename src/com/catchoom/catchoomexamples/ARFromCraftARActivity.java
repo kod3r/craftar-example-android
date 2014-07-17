@@ -39,6 +39,7 @@ import com.catchoom.CatchoomImage;
 import com.catchoom.CatchoomImageHandler;
 import com.catchoom.CatchoomResponseHandler;
 import com.catchoom.CatchoomSDK;
+import com.catchoom.CatchoomSDKException;
 import com.catchoom.CatchoomTracking;
 
 public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler {
@@ -80,7 +81,7 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 		mCloudRecognition.setResponseHandler(this); //Tell the cloud recognition who will receive the responses from the cloud
 		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); //Tell the cloud-recognition which token to use from the finder mode
 		
-		
+		mCloudRecognition.setItemsFactory(new MyItemFactory(getApplicationContext()));
 		
 		//Start finder mode
 		mCloudRecognition.startFinding();
