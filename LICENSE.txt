@@ -1,4 +1,4 @@
-catchoom-example-android is free software. You may use it under the MIT license, which is copied below and available at http://opensource.org/licenses/MIT
+craftar-example-android is free software. You may use it under the MIT license, which is copied below and available at http://opensource.org/licenses/MIT
 
 Copyright (c) 2014 Catchoom Technologies S.L.
 
@@ -11,4 +11,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 This software includes the following software packages:
 1999-2013 Apache HttpComponents Project | Apache HttpComponents Client is released under the Apache License, Version 2.0
 2007-2011 Apache Sanselan | Apache Sanselan is released under the Apache License, Version 2.0
-2012 NineOldAndroids | NineOldAndroids is authored by Jake Wharton and released under the Apache License, Version 2.0

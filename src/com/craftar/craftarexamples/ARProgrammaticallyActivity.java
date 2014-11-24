@@ -1,4 +1,4 @@
-// com.catchoom.catchoomexamples is free software. You may use it under the MIT license, which is copied
+// com.craftar.craftarexamples is free software. You may use it under the MIT license, which is copied
 // below and available at http://opensource.org/licenses/MIT
 //
 // Copyright (c) 2014 Catchoom Technologies S.L.
@@ -20,7 +20,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-package com.catchoom.catchoomexamples;
+package com.craftar.craftarexamples;
 
 import java.util.ArrayList;
 
@@ -28,30 +28,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.catchoom.CatchoomARItem;
-import com.catchoom.CatchoomActivity;
-import com.catchoom.CatchoomCamera;
-import com.catchoom.CatchoomCameraView;
-import com.catchoom.CatchoomCloudRecognition;
-import com.catchoom.CatchoomCloudRecognitionError;
-import com.catchoom.CatchoomCloudRecognitionItem;
-import com.catchoom.CatchoomImage;
-import com.catchoom.CatchoomImageHandler;
-import com.catchoom.CatchoomResponseHandler;
-import com.catchoom.CatchoomSDK;
-import com.catchoom.CatchoomTracking;
+import com.craftar.CraftARActivity;
+import com.craftar.CraftARCamera;
+import com.craftar.CraftARCameraView;
+import com.craftar.CraftARCloudRecognition;
+import com.craftar.CraftARCloudRecognitionError;
+import com.craftar.CraftARImage;
+import com.craftar.CraftARImageHandler;
+import com.craftar.CraftARItem;
+import com.craftar.CraftARItemAR;
+import com.craftar.CraftARResponseHandler;
+import com.craftar.CraftARSDK;
+import com.craftar.CraftARSDKException;
+import com.craftar.CraftARTracking;
+import com.craftar.CraftARTrackingContent;
+import com.craftar.CraftARTrackingContentImage;
 
-public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomResponseHandler,CatchoomImageHandler {
+public class ARProgrammaticallyActivity extends CraftARActivity implements CraftARResponseHandler,CraftARImageHandler {
 
-	private final String TAG = "CatchoomTrackingExample";
+	private final String TAG = "CraftARTrackingExample";
 	private final static String COLLECTION_TOKEN="craftarexamples1";
 	
 	private View mScanningLayout;
 	
-	CatchoomCamera mCamera;
+	CraftARCamera mCamera;
 	
-	CatchoomCloudRecognition mCloudRecognition;
-	CatchoomTracking mCatchoomTracking;
+	CraftARCloudRecognition mCloudRecognition;
+	CraftARTracking mCraftARTracking;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	public void onPostCreate() {
 		
 		View mainLayout= (View) getLayoutInflater().inflate(R.layout.activity_ar_programmatically_ar_from_craftar, null);
-		CatchoomCameraView cameraView = (CatchoomCameraView) mainLayout.findViewById(R.id.camera_preview);
+		CraftARCameraView cameraView = (CraftARCameraView) mainLayout.findViewById(R.id.camera_preview);
 		super.setCameraView(cameraView);
 		setContentView(mainLayout);
 		
@@ -69,14 +72,14 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 		
 		
 		//Initialize the SDK. From this SDK, you will be able to retrieve the necessary modules to use the SDK (camera, tracking, and cloud-recgnition)
-		CatchoomSDK.init(getApplicationContext(),this);
+		CraftARSDK.init(getApplicationContext(),this);
 		
 		//Get the camera to be able to do single-shot (if you just use finder-mode, this is not necessary)
-		mCamera= CatchoomSDK.getCamera();
+		mCamera= CraftARSDK.getCamera();
 		mCamera.setImageHandler(this); //Tell the camera who will receive the image after takePicture()
 		
 		//Setup the finder-mode: Note! PRESERVE THE ORDER OF THIS CALLS
-		mCloudRecognition= CatchoomSDK.getCloudRecognition();//Obtain the cloud recognition module
+		mCloudRecognition= CraftARSDK.getCloudRecognition();//Obtain the cloud recognition module
 		mCloudRecognition.setResponseHandler(this); //Tell the cloud recognition who will receive the responses from the cloud
 		mCloudRecognition.setCollectionToken(COLLECTION_TOKEN); //Tell the cloud-recognition which token to use from the finder mode
 		
@@ -86,29 +89,41 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 		mCloudRecognition.startFinding();
 		
 		//Obtain the tracking module
-		mCatchoomTracking = CatchoomSDK.getTracking();
+		mCraftARTracking = CraftARSDK.getTracking();
 		
 		mCloudRecognition.connect(COLLECTION_TOKEN);
 		
 	}
 	
 	@Override
-	public void searchCompleted(ArrayList<CatchoomCloudRecognitionItem> results) {
-		if(results.size()==0){
-		}else{
-			CatchoomCloudRecognitionItem item = results.get(0);
-			if (item.isAR()) {
+	public void searchCompleted(ArrayList<CraftARItem> results) {
+		if(results.size()!=0){
+			CraftARItem item = results.get(0);
+			if (item.isAR() && item.getItemName().equals("AR programmatically")) {
 				// Stop Finding
 				mCloudRecognition.stopFinding();
 				
 				// Cast the found item to an AR item
-				CatchoomARItem myARItem = (CatchoomARItem)item;
+				CraftARItemAR myARItem = (CraftARItemAR)item;
+				
+				// Create an ImageContent from a local image (in raw/res, copied to the sdcard by the SDK)
+				String url = (getAppDataDirectory() + "/ar_programmatically_content.png");
+				CraftARTrackingContentImage imageContent = new CraftARTrackingContentImage(url);
+				imageContent.setWrapMode(CraftARTrackingContent.ContentWrapMode.WRAP_MODE_ASPECT_FIT);
+				
+				// Add content to the item
+				myARItem.addContent(imageContent);
 				
 				// Add content to the tracking SDK and start AR experience
-				mCatchoomTracking.addItem(myARItem);
-				mCatchoomTracking.startTracking();
-				
-				mScanningLayout.setVisibility(View.GONE);
+				try {
+					mCraftARTracking.addItem(myARItem);
+					mCraftARTracking.startTracking();
+					mScanningLayout.setVisibility(View.GONE);
+				} catch (CraftARSDKException e) {
+					//The item could not be added
+					e.printStackTrace();
+				}
+	
 			}
 			
 		}
@@ -121,14 +136,14 @@ public class ARFromCraftARActivity extends CatchoomActivity implements CatchoomR
 	
 	@Override
 	public void requestFailedResponse(int requestCode,
-			CatchoomCloudRecognitionError responseError) {
+			CraftARCloudRecognitionError responseError) {
 		Log.d(TAG,"requestFailedResponse");	
 		
 	}
 
 	//Callback received for SINGLE-SHOT only (after takePicture).
 	@Override
-	public void requestImageReceived(CatchoomImage image) {
+	public void requestImageReceived(CraftARImage image) {
 		mCloudRecognition.searchWithImage(COLLECTION_TOKEN,image);
 	}
 	@Override

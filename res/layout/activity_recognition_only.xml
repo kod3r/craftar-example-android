@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout1">
-        <com.catchoom.CatchoomCameraView
+        <com.craftar.CraftARCameraView
         android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true" >
-    </com.catchoom.CatchoomCameraView>
+    </com.craftar.CraftARCameraView>
 
     </RelativeLayout>
 
