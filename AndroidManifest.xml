@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.catchoom.catchoomexamples"
+    package="com.craftar.craftarexamples"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.catchoom.catchoomexamples.SplashScreenActivity"
+            android:name="com.craftar.craftarexamples.SplashScreenActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -30,27 +30,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.ARProgrammaticallyActivity"
+            android:name="com.craftar.craftarexamples.ARProgrammaticallyActivity"
             android:screenOrientation="portrait" >
             </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.ARFromCraftARActivity"
+            android:name="com.craftar.craftarexamples.ARFromCraftARActivity"
             android:screenOrientation="portrait" >
             </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.RecognitionOnlyActivity"
+            android:name="com.craftar.craftarexamples.RecognitionOnlyActivity"
             android:screenOrientation="portrait" >
             </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.LaunchersActivity"
+            android:name="com.craftar.craftarexamples.LaunchersActivity"
             android:screenOrientation="portrait" >
             </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.HowToActivity"
+            android:name="com.craftar.craftarexamples.HowToActivity"
             android:screenOrientation="portrait" >
             </activity>
         <activity
-            android:name="com.catchoom.catchoomexamples.WebActivity"
+            android:name="com.craftar.craftarexamples.WebActivity"
             android:screenOrientation="portrait" >
             </activity>
     </application>
