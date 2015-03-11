@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 
 import com.craftar.CraftARActivity;
 import com.craftar.CraftARCamera;
@@ -44,12 +46,16 @@ import com.craftar.CraftARTracking;
 import com.craftar.CraftARTrackingContent;
 import com.craftar.CraftARTrackingContentImage;
 
-public class ARProgrammaticallyActivity extends CraftARActivity implements CraftARResponseHandler,CraftARImageHandler {
+public class ARProgrammaticallyActivity extends CraftARActivity implements CraftARResponseHandler,CraftARImageHandler, OnClickListener {
 
 	private final String TAG = "CraftARTrackingExample";
 	private final static String COLLECTION_TOKEN="craftarexamples1";
 	
 	private View mScanningLayout;
+	
+	private CraftARItemAR myARItem;
+	private boolean isPinned = false;
+	private boolean isTrackingEnabled = false;
 	
 	CraftARCamera mCamera;
 	
@@ -69,6 +75,9 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 		setContentView(mainLayout);
 		
 		mScanningLayout = findViewById(R.id.layout_scanning);
+		
+		ImageView pinToScreen = (ImageView)findViewById(R.id.pin_to_screen);
+		pinToScreen.setOnClickListener(this);
 		
 		
 		//Initialize the SDK. From this SDK, you will be able to retrieve the necessary modules to use the SDK (camera, tracking, and cloud-recgnition)
@@ -104,7 +113,7 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 				mCloudRecognition.stopFinding();
 				
 				// Cast the found item to an AR item
-				CraftARItemAR myARItem = (CraftARItemAR)item;
+				myARItem = (CraftARItemAR)item;
 				
 				// Create an ImageContent from a local image (in raw/res, copied to the sdcard by the SDK)
 				String url = (getAppDataDirectory() + "/ar_programmatically_content.png");
@@ -118,6 +127,7 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 				try {
 					mCraftARTracking.addItem(myARItem);
 					mCraftARTracking.startTracking();
+					isTrackingEnabled = true;
 					mScanningLayout.setVisibility(View.GONE);
 				} catch (CraftARSDKException e) {
 					//The item could not be added
@@ -149,6 +159,21 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 	@Override
 	public void requestImageError(String error) {
 		//Take picture failed
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (!isPinned && isTrackingEnabled) {
+			myARItem.setDrawOffTracking(true);
+			mCraftARTracking.stopTracking();
+			isPinned = true;
+		} else if (myARItem != null){
+			myARItem.setDrawOffTracking(false);
+			isPinned = false;
+			mCraftARTracking.startTracking();
+			isTrackingEnabled = true;
+			
+		}
 	}
 
 	
