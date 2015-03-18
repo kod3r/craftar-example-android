@@ -65,7 +65,7 @@
         android:layout_margin="20dp"
         android:orientation="vertical" >
         <ImageView 
-            android:id ="@+id/pin_to_screen"
+            android:id ="@+id/attach_to_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerInside"

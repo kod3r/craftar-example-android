@@ -54,7 +54,7 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 	private View mScanningLayout;
 	
 	private CraftARItemAR myARItem;
-	private boolean isPinned = false;
+	private boolean isAttached = false;
 	private boolean isTrackingEnabled = false;
 	
 	CraftARCamera mCamera;
@@ -76,8 +76,8 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 		
 		mScanningLayout = findViewById(R.id.layout_scanning);
 		
-		ImageView pinToScreen = (ImageView)findViewById(R.id.pin_to_screen);
-		pinToScreen.setOnClickListener(this);
+		ImageView attachToScreen = (ImageView)findViewById(R.id.attach_to_screen);
+		attachToScreen.setOnClickListener(this);
 		
 		
 		//Initialize the SDK. From this SDK, you will be able to retrieve the necessary modules to use the SDK (camera, tracking, and cloud-recgnition)
@@ -163,13 +163,13 @@ public class ARProgrammaticallyActivity extends CraftARActivity implements Craft
 
 	@Override
 	public void onClick(View v) {
-		if (!isPinned && isTrackingEnabled) {
+		if (!isAttached && isTrackingEnabled) {
 			myARItem.setDrawOffTracking(true);
 			mCraftARTracking.stopTracking();
-			isPinned = true;
+			isAttached = true;
 		} else if (myARItem != null){
 			myARItem.setDrawOffTracking(false);
-			isPinned = false;
+			isAttached = false;
 			mCraftARTracking.startTracking();
 			isTrackingEnabled = true;
 			
