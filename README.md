@@ -1,4 +1,4 @@
-## CraftAR - Android SDK examples
+## CraftAR - Android Augmented Reality SDK examples
 
 ### Introduction
 
@@ -33,6 +33,6 @@ To build the project or use the library, you will need the latest version of the
 SDK and a device with Android 4.0 or newer.
 
 #### Step-by-step guide
-1.  Download the [CraftAR SDK](http://catchoom.com/product/mobile-sdk/) for Android.
+1.  Download the [CraftAR Augmented Reality SDK](http://catchoom.com/product/mobile-sdk/) for Android.
 2.  Unzip the package
 3.  Copy the libs folder into the root of the project.
